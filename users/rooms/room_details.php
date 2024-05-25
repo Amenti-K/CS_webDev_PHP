@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,6 +14,7 @@ if ($conn->connect_error) {
 }
 
 $room_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$userEmail = $_SESSION['email'];
 
 $sql = "SELECT id, name, description, price, image_path1, image_path2, image_path3, location, num_bedrooms, num_beds, num_bathrooms, kitchen, wifi, ac FROM rooms WHERE id = $room_id";
 $result = $conn->query($sql);
@@ -93,13 +95,13 @@ $conn->close();
             <p>WiFi: <?php echo $room['wifi'] ? 'Yes' : 'No'; ?></p>
             <p>AC: <?php echo $room['ac'] ? 'Yes' : 'No'; ?></p>
             <?php if ($room['image_path1']): ?>
-                <img src="../<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
+                <img src="../../<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
             <?php endif; ?>
             <?php if ($room['image_path2']): ?>
-                <img src="../<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
+                <img src="../../<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
             <?php endif; ?>
             <?php if ($room['image_path3']): ?>
-                <img src="../<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
+                <img src="../../<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
             <?php endif; ?>
         </div>
 

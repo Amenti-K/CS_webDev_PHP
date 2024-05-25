@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ac = isset($_POST['ac']) ? 1 : 0;
 
     // Handle file uploads
-    $target_dir = "uploads/";
+    $target_dir = "../uploads/";
     $image_paths = [];
 
     for ($i = 1; $i <= 3; $i++) {

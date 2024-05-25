@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $servername = "localhost";
     $username = "root";
@@ -23,6 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_out_date_obj = new DateTime($check_out_date);
     $number_of_nights = $check_in_date_obj->diff($check_out_date_obj)->days;
 
+    // User email to connect room reserved to the gust
+    $userEmail = $_SESSION['email'];
+
     // Check if the room is already reserved for the requested dates
     $sql = "SELECT * FROM reserved_rooms 
             WHERE room_id = '$room_id' 
@@ -39,11 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script> alert('Room is already reserved for the selected dates.'); window.history.back(); </script>";
     } else {
         // Insert data into the reserved_rooms table
-        $sql = "INSERT INTO reserved_rooms (room_id, check_in_date, number_of_nights)
-                VALUES ('$room_id', '$check_in_date', '$number_of_nights')";
+        $sql = "INSERT INTO reserved_rooms (room_id, check_in_date, number_of_nights, user_email)
+                VALUES ('$room_id', '$check_in_date', '$number_of_nights', '$userEmail')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "Room reserved successfully";
+            echo "<script> alert('room reserved successfully!'); window.history.back();</script>";
+            // header("location: availableRooms.html?message='1'");
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
