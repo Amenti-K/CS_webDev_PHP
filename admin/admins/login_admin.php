@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Fetch user details from the database
-    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $sql = "SELECT * FROM admins WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {

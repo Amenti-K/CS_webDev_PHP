@@ -1,5 +1,4 @@
 <?php
-
     session_start();
     // Connect to the database
     // $servername = "localhost";
@@ -13,28 +12,25 @@
         echo $th;
     }
 
-
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
-        $username = $_POST['username'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
-        $govID = $_POST['govID'];
         $phonenumber = $_POST['phonenumber'];
 
-        $sql = "INSERT INTO users (username, first_name, last_name, email, password, govID, phonenumber)
-                VALUES ('$username', '$first_name', '$last_name', '$email', '$password', '$govID', '$phonenumber')";
+        $sql = "INSERT INTO admins (first_name, last_name, email, phone_number, password)
+                VALUES ('$first_name', '$last_name', '$email', '$phonenumber', '$password')";
         try {
             if ($conn->query($sql) === TRUE) {
-                echo "User registered successfully.";
+                // echo "User registered successfully.";
                 $_SESSION['email'] = $user['email'];
-                echo "session created using the email";
+                // echo "session created using the email";
     
                 // Redirect to a protected page0
                 // header("Location: logedINpage.php?email=${email}");
