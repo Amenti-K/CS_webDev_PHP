@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Room</title>
+  </head>
+  <body>
+    <h1>Add a New Room</h1>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+      <label for="name">Room Name:</label>
+      <input type="text" name="name" id="name" required /><br /><br />
+
+      <label for="description">Description:</label>
+      <textarea name="description" id="description" required></textarea
+      ><br /><br />
+
+      <label for="price">Price:</label>
+      <input
+        type="number"
+        name="price"
+        id="price"
+        step="0.01"
+        required
+      /><br /><br />
+
+      <label for="image1">Image 1:</label>
+      <input
+        type="file"
+        name="image1"
+        id="image1"
+        accept="image/*"
+        required
+      /><br /><br />
+
+      <label for="image2">Image 2:</label>
+      <input
+        type="file"
+        name="image2"
+        id="image2"
+        accept="image/*"
+        required
+      /><br /><br />
+
+      <label for="image3">Image 3:</label>
+      <input
+        type="file"
+        name="image3"
+        id="image3"
+        accept="image/*"
+        required
+      /><br /><br />
+
+      <label for="location">Location:</label>
+      <input type="text" name="location" id="location" required /><br /><br />
+
+      <label for="num_bedrooms">Number of Bedrooms:</label>
+      <input
+        type="number"
+        name="num_bedrooms"
+        id="num_bedrooms"
+        required
+      /><br /><br />
+
+      <label for="num_beds">Number of Beds:</label>
+      <input type="number" name="num_beds" id="num_beds" required /><br /><br />
+
+      <label for="num_bathrooms">Number of Bathrooms:</label>
+      <input
+        type="number"
+        name="num_bathrooms"
+        id="num_bathrooms"
+        required
+      /><br /><br />
+
+      <label for="kitchen">Kitchen:</label>
+      <input type="checkbox" name="kitchen" id="kitchen" /><br /><br />
+
+      <label for="wifi">WiFi:</label>
+      <input type="checkbox" name="wifi" id="wifi" /><br /><br />
+
+      <label for="ac">AC:</label>
+      <input type="checkbox" name="ac" id="ac" /><br /><br />
+
+      <input type="submit" value="Add Room" />
+    </form>
+  </body>
+</html>
