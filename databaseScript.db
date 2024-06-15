@@ -2,49 +2,64 @@
 // This table stores information about each room in the guest house or hotel.
 
 CREATE TABLE rooms (
-    room_id INT AUTO_INCREMENT PRIMARY KEY,
-    room_number VARCHAR(10) NOT NULL,
-    num_of_beds INT NOT NULL,
-    status_ac BOOLEAN NOT NULL,
-    status_wifi BOOLEAN NOT NULL,
-    room_type CHAR(1) NOT NULL,
-    available BOOLEAN DEFAULT TRUE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    bedrooms INT NOT NULL,
+    beds INT NOT NULL,
+    bathrooms INT NOT NULL,
+    kitchen BOOLEAN DEFAULT FALSE,
+    wifi BOOLEAN DEFAULT FALSE,
+    ac BOOLEAN DEFAULT FALSE,
+    image_path1 VARCHAR(255) NOT NULL,
+    image_path2 VARCHAR(255) NOT NULL,
+    image_path3 VARCHAR(255) NOT NULL
 );
+
 
 // Users Table
 // This table stores information about registered users who can log into the system.
 
 CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL,
-    gender CHAR(1),
-    age INT
+    password VARCHAR(255) NOT NULL,
+    govID VARCHAR(100),
+    phone_number VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 // Admin Table
 // This table stores information about administrators who manage the system.
 
-CREATE TABLE admin (
-    admin_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL
+    phone_number VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 //Reserved Rooms Table
 // This table tracks reservations made by users for specific rooms.
 
 CREATE TABLE reserved_rooms (
-    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    room_id INT NOT NULL,
-    entry_date DATE NOT NULL,
-    exit_date DATE NOT NULL,
-    num_of_rooms INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_email VARCHAR(100),
+    check_in_date DATE NOT NULL,
+    check_out_date DATE NOT NULL,
+    number_of_nights INT NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_email) REFERENCES users(email) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
