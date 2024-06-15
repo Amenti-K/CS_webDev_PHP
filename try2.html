@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest House</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #8B4513; /* Adjust the color as needed */
+            padding: 10px 20px;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left a, .nav-right a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .nav-left a:hover, .nav-right a:hover {
+            text-decoration: underline;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 5px 10px;
+            background-color: white;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 5px;
+        }
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .signin-button {
+            background-color: white;
+            color: #8B4513;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="#">Home</a>
+            <a href="#">Rooms</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <button>
+                <img src="search-icon.png" alt="Search">
+            </button>
+        </div>
+        <div class="nav-right">
+            <a href="#">Sign In</a>
+            <a href="#">Sign Up</a>
+        </div>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest House</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .nav-left, .nav-right, .nav-center {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left img {
+            height: 40px;
+            margin-right: 20px;
+        }
+        .nav-center a, .nav-right a {
+            color: #000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .nav-center a:hover, .nav-right a:hover {
+            text-decoration: underline;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 5px;
+        }
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .signin-button {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="logo.png" alt="Guest House Logo">
+            <a href="#">Home</a>
+            <a href="#">Rooms</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="nav-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button>
+                    <img src="search-icon.png" alt="Search">
+                </button>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="#">Discover</a>
+            <a href="#">Trips</a>
+            <a href="#">Review</a>
+            <a href="#" class="signin-button">Sign In</a>
+        </div>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest House Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Guest House</div>
+            <div class="nav-content">
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="room.html">Rooms</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search">
+                    <button>
+                        <img src="" alt="Search">
+                    </button>
+                </div>
+                <ul class="nav-auth">
+                    <li><a href="#" id="signInButton">Sign In</a></li>
+                    <li><a href="#" id="signUpButton">Sign Up</a></li>
+                </ul>
+                <div id="profileMenu" class="profile-menu">
+                    <img src="images/profile.avif" alt="Profile Icon" class="profile-icon" id="profileIcon">
+                    <div class="dropdown-content" id="dropdownContent">
+                        <p>Email: user@example.com</p>
+                        <p>Name: John Doe</p>
+                        <a href="#">Edit Profile</a>
+                        <a href="#" id="logoutButton">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Our Guest House</h1>
+                <p>Your comfort is our priority. Enjoy a luxurious stay at our beautifully designed guest house.</p>
+                <button onclick="bookNow()">Book Now</button>
+            </div>
+        </section>
+        <section class="features">
+            <h2>Our Features</h2>
+            <div class="feature">
+                <img src="images/cozyroom.webp" alt="Cozy Rooms">
+                <h3>Cozy Rooms</h3>
+                <p>Experience comfort like never before in our cozy rooms.</p>
+            </div>
+            <div class="feature">
+                <img src="images/freewifi.jpg" alt="Free Wi-Fi">
+                <h3>Free Wi-Fi</h3>
+                <p>Stay connected with our complimentary high-speed Wi-Fi.</p>
+            </div>
+            <div class="feature">
+                <img src="images/breakfast.jpg" alt="Delicious Breakfast">
+                <h3>Delicious Breakfast</h3>
+                <p>Start your day with a delicious and healthy breakfast.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Guest House Management. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
