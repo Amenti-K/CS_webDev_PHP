@@ -18,55 +18,161 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>View Users</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="styleUser.css">
 </head>
 <body>
-    <h1>Registered Users</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Government ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['username']}</td>
-                            <td>{$row['first_name']}</td>
-                            <td>{$row['last_name']}</td>
-                            <td>{$row['email']}</td>
-                            <td>{$row['phonenumber']}</td>
-                            <td>{$row['govID']}</td>
-                          </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>No users found</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+    <main class="table">
+        <section class="table_header">
+            <h1>Registered Users</h1>
+        </section>
+        <section class="table_body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Government ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>
+                                    <td>{$row['username']}</td>
+                                    <td>{$row['first_name']}</td>
+                                    <td>{$row['last_name']}</td>
+                                    <td>{$row['email']}</td>
+                                    <td>{$row['phonenumber']}</td>
+                                    <td>{$row['govID']}</td>
+                                  </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No users found</td></tr>";
+                    }
+                    ?>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    <tr>
+                        <td>bb</td>
+                        <td>biftu</td>
+                        <td>kebede</td>
+                        <td>biftu@email</td>
+                        <td>091111111</td>
+                        <td>ugr/547/15</td>
+                    </tr>
+                    
+
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
 </body>
 </html>
 

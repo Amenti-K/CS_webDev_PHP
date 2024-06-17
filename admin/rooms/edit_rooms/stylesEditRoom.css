@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+
+  height: max-content;
+  border: 1px solid hsl(258, 58%, 42%);
+}
+.popup .popup-header {
+  margin-bottom: 10px;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px 0 5px 0;
+}
+form .user-details .input-box {
+  margin-bottom: 8px;
+  width: calc(100% / 2 - 20px);
+}
+.user-details .input-box label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input,
+.user-details .input-box textarea {
+  height: 30px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding-left: 15px;
+  font-size: 16px;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+
+/* .user-details .input-box input:focus {
+   background-color: rgb(248, 178, 87); 
+}
+*/
+form .amenities {
+  display: flex;
+  justify-content: space-around;
+}
+.popup .button {
+  height: 45px;
+  margin: 15px 70px 0;
+}
+.popup button {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 5px;
+  letter-spacing: 0.5px;
+  background-color: hsl(258, 58%, 42%);
+}
+
+#remove-popup {
+  max-width: max-content;
+}
+
+#remove-popup .remove-buttons {
+  margin: 10px 0 0;
+  display: flex;
+  justify-content: space-around;
+  width: inherit;
+  height: 25px;
+  & button {
+    height: 100%;
+    width: calc(100% / 2 - 80px);
+  }
+}
+/* 
+
+#edit-popup form .sections {
+  display: flex;
+}
+#edit-popup form .section {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+#edit-popup .inputs {
+  display: flex;
+  flex-direction: column;
+  background-color: aquamarine;
+  width: min-content;
+  margin: 5px;
+  & input {
+    background-color: #eee;
+    border: none;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: max-content;
+    outline: none;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
+  }
+  & textarea {
+    background-color: #eee;
+    border: none;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: max-content;
+    outline: none;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
+  }
+}
+#edit-popup .inputs .images,
+.bed-room {
+  display: flex;
+  flex-direction: row;
+  width: min-content;
+}
+#edit-popup .inputs .checkboxes {
+  display: flex;
+  flex-direction: row;
+  width: min-content;
+}
+#edit-popup .inputs .images {
+  display: flex;
+  flex-direction: row;
+  & input {
+    width: min-content;
+    height: min-content;
+    padding: 0;
+  }
+}
+
+ */

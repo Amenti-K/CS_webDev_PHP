@@ -1,3 +1,12 @@
+<?php 
+session_start();
+if (isset($_SESSION['emaiAdmin'])){
+  $user = $_SESSION['emaiAdmin'];
+}
+else $user = '';
+// $email = isset($_GET['email']) ? $_GET['email'] : 0;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,7 +71,8 @@
   </head>
   <body>
     <h1>Available Rooms</h1>
-    <a href="add_rooms/addRooms.html"
+    <?php echo "<P> $user </p>" ?>
+    <a href="add_rooms/addRooms.php"
       ><button type="button">ADD rooms</button></a
     >
     <div id="rooms-container"></div>

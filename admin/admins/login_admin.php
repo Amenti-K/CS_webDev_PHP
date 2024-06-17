@@ -24,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify password
         if (password_verify($password, $user['password'])) {
             // Password is correct, start a session
-            $_SESSION['email'] = $user['email'];
+            $_SESSION['emailAdmin'] = $email;
 
             // Redirect to a protected page
             // header("Location: logedINpage.php?email=${email}");
-            header("Location: logedINpage.php");
+            header("Location: ../rooms/availableRooms.php");
             exit;
         } else {
             // Invalid password

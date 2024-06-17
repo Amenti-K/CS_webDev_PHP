@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$user = $_SESSION['email'];
+$user = $_SESSION['emailUser'];
 // $email = isset($_GET['email']) ? $_GET['email'] : 0;
 ?>
 <!DOCTYPE html>

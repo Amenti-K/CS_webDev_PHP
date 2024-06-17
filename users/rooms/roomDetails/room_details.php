@@ -1,28 +1,37 @@
 <?php
 session_start();
+$logged = isset($_SESSION['emailUser']);
+$userEmail = $logged ? $_SESSION['emailUser'] : null;
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "mineghm";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 $room_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$userEmail = $_SESSION['email'];
 
-$sql = "SELECT id, name, description, price, image_path1, image_path2, image_path3, location, num_bedrooms, num_beds, num_bathrooms, kitchen, wifi, ac FROM rooms WHERE id = $room_id";
+$sql = "SELECT id, name, description, price, image_path1, image_path2, image_path3, location, num_bedrooms, num_beds, num_bathrooms, kitchen, wifi, ac, average_rating FROM rooms WHERE id = $room_id";
 $result = $conn->query($sql);
 
 $room = null;
-
 if ($result->num_rows > 0) {
     $room = $result->fetch_assoc();
+}
+
+// Get the current rating of the room by the logged-in user
+$current_user_rating = 0;
+if ($logged) {
+    $sql = "SELECT rating FROM ratings WHERE room_id = $room_id AND user_email = '$userEmail'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $current_user_rating = $row['rating'];
+    }
 }
 
 $conn->close();
@@ -79,11 +88,31 @@ $conn->close();
             text-decoration: none;
             cursor: pointer;
         }
+        .stars {
+            display: flex;
+        }
+        .star {
+            cursor: pointer;
+            font-size: 24px;
+            color: #ddd;
+        }
+        .star.selected {
+            color: #f5b301;
+        }
     </style>
 </head>
 <body>
     <?php if ($room): ?>
         <div class="room-details">
+            <?php if ($room['image_path1']): ?>
+                <img src="<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
+            <?php endif; ?>
+            <?php if ($room['image_path2']): ?>
+                <img src="<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
+            <?php endif; ?>
+            <?php if ($room['image_path3']): ?>
+                <img src="<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
+            <?php endif; ?>
             <h1><?php echo htmlspecialchars($room['name']); ?></h1>
             <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
             <p>Price: $<?php echo htmlspecialchars($room['price']); ?> per night</p>
@@ -94,20 +123,17 @@ $conn->close();
             <p>Kitchen: <?php echo $room['kitchen'] ? 'Yes' : 'No'; ?></p>
             <p>WiFi: <?php echo $room['wifi'] ? 'Yes' : 'No'; ?></p>
             <p>AC: <?php echo $room['ac'] ? 'Yes' : 'No'; ?></p>
-            <?php if ($room['image_path1']): ?>
-                <img src="../../<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
-            <?php if ($room['image_path2']): ?>
-                <img src="../../<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
-            <?php if ($room['image_path3']): ?>
-                <img src="../../<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
+            <!-- <p>Average Rating: <?php echo htmlspecialchars($room['average_rating']); ?></p> -->
+            <div class="stars">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
+                <?php endfor; ?>
+            </div>
         </div>
 
         <div class="reservation-form">
             <h2>Reserve this Room</h2>
-            <form id="reservationForm" action="reserve_room.php" method="post">
+            <form id="reservationForm" action="../reservation/reserve_room.php" method="post">
                 <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
                 
                 <label for="check_in_date">Check-In Date:</label>
@@ -183,6 +209,34 @@ $conn->close();
         function confirmReservation() {
             document.getElementById("reservationForm").submit();
         }
+
+        document.querySelectorAll('.star').forEach(function(star) {
+            star.addEventListener('click', function() {
+                var rating = this.getAttribute('data-value');
+                <?php if ($logged): ?>
+                    var room_id = <?php echo $room_id; ?>;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "rate_room.php", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            // Handle response
+                            document.querySelectorAll('.star').forEach(function(star) {
+                                star.classList.remove('selected');
+                            });
+                            for (var i = 1; i <= rating; i++) {
+                                document.querySelector('.star[data-value="' + i + '"]').classList.add('selected');
+                            }
+                            alert('Rating submitted successfully');
+                        }
+                    };
+                    xhr.send("room_id=" + room_id + "&rating=" + rating);
+                <?php else: ?>
+                    alert('You must be logged in to rate a room.');
+                    window.location.href = 'signup.php';
+                <?php endif; ?>
+            });
+        });
     </script>
 </body>
 </html>

@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $number_of_nights = $check_in_date_obj->diff($check_out_date_obj)->days;
 
     // User email to connect room reserved to the gust
-    $userEmail = $_SESSION['email'];
-
+    $userEmail = $_SESSION['emailUser'];
+    
     // Check if the room is already reserved for the requested dates
     $sql = "SELECT * FROM reserved_rooms 
             WHERE room_id = '$room_id' 

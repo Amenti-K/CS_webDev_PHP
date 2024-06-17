@@ -29,12 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         try {
             if ($conn->query($sql) === TRUE) {
                 // echo "User registered successfully.";
-                $_SESSION['email'] = $user['email'];
+                $_SESSION['emailAdmin'] = $email;
                 // echo "session created using the email";
     
                 // Redirect to a protected page0
                 // header("Location: logedINpage.php?email=${email}");
-                header("Location: logedINpage.php");
+                header("Location: ../rooms/availableRooms.php");
                 exit;
             } else {
                 echo "in else";

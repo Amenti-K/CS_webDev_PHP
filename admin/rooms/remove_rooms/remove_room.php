@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
         // Delete room from rooms table
         $sql = "DELETE FROM rooms WHERE id = $room_id";
         if ($conn->query($sql) === TRUE) {
-            header("Location: available_rooms.php");
+            header("Location: ../availableRooms.php");
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }

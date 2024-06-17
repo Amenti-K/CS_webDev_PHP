@@ -1,0 +1,36 @@
+a {
+  text-decoration: none;
+  color: #000;
+}
+header {
+  display: flex;
+  flex-direction: column;
+}
+nav {
+  display: flex;
+  flex-direction: row;
+}
+nav .logo {
+  color: #000;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: large;
+}
+
+.room {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px 0;
+}
+.room img {
+  max-width: 100%;
+  height: auto;
+}
+.room h2,
+.room p {
+  margin: 8px 0;
+}
+.room a {
+  text-decoration: none;
+  color: #000;
+}
