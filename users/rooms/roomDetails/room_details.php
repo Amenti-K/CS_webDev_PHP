@@ -23,18 +23,31 @@ if ($result->num_rows > 0) {
     $room = $result->fetch_assoc();
 }
 
-// Get the current rating of the room by the logged-in user
-$current_user_rating = 0;
-if ($logged) {
-    $sql = "SELECT rating FROM ratings WHERE room_id = $room_id AND user_email = '$userEmail'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $current_user_rating = $row['rating'];
-    }
+
+$stmt = $conn->prepare("SELECT userName, comment FROM comments WHERE room_id = ?");
+$stmt->bind_param("i", $room_id);
+$stmt->execute();
+$stmt->bind_result($userName, $comment);
+
+$comments = [];
+while ($stmt->fetch()) {
+    $comments[] = ['userName' => $userName, 'comment' => $comment];
 }
 
+$stmt->close();
+
 $conn->close();
+// this was for rating purpose; we will change it ot favoriting
+// Get the current rating of the room by the logged-in user
+// $current_user_rating = 0;
+// if ($logged) {
+//     $sql = "SELECT rating FROM ratings WHERE room_id = $room_id AND user_email = '$userEmail'";
+//     $result = $conn->query($sql);
+//     if ($result->num_rows > 0) {
+//         $row = $result->fetch_assoc();
+//         $current_user_rating = $row['rating'];
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -42,69 +55,13 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Room Details</title>
-    <style>
-        .room-details, .reservation-form {
-            border: 1px solid #ccc;
-            padding: 16px;
-            margin: 16px 0;
-        }
-        .room-details img {
-            max-width: 100%;
-            height: auto;
-        }
-        .room-details h2, .room-details p {
-            margin: 8px 0;
-        }
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .stars {
-            display: flex;
-        }
-        .star {
-            cursor: pointer;
-            font-size: 24px;
-            color: #ddd;
-        }
-        .star.selected {
-            color: #f5b301;
-        }
-    </style>
+    <link rel="stylesheet" href="roomDetails.css">
 </head>
 <body>
     <?php include '../navBar/navbar.php'; ?>
     <?php if ($room): ?>
         <div class="room-details">
+            <h1><?php echo htmlspecialchars($room['name']); ?></h1>
             <?php if ($room['image_path1']): ?>
                 <img src="<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
             <?php endif; ?>
@@ -114,7 +71,6 @@ $conn->close();
             <?php if ($room['image_path3']): ?>
                 <img src="<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
             <?php endif; ?>
-            <h1><?php echo htmlspecialchars($room['name']); ?></h1>
             <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
             <p>Price: $<?php echo htmlspecialchars($room['price']); ?> per night</p>
             <p>Location: <?php echo htmlspecialchars($room['location']); ?></p>
@@ -156,6 +112,17 @@ $conn->close();
                 <button onclick="confirmReservation()">Confirm Reservation</button>
             </div>
         </div>
+
+        <!-- comment section -->
+        <div class="comments-section">
+            <?php foreach ($comments as $comment) : ?>
+                <div class="comment">
+                    <strong><?php echo htmlspecialchars($comment['userName']); ?></strong>
+                    <p><?php echo htmlspecialchars($comment['comment']); ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
     <?php else: ?>
         <p>Room not found.</p>
     <?php endif; ?>

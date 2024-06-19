@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Comment</title>
+    <style>
+        .comment-form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-form h2 {
+            margin-bottom: 15px;
+        }
+        .comment-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-form button {
+            padding: 10px 15px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comment-form button:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="comment-form">
+    <h2>Leave a Comment</h2>
+    <form action="insertcomment.php" method="POST">
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" name="userName" required>
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" rows="5" required></textarea>
+
+        <input type="hidden" name="room_id" value="<?php echo $_GET['room_id']; ?>"> <!-- Assuming the room ID is passed via GET -->
+
+        <button type="submit">Submit Comment</button>
+    </form>
+</div>
+
+</body>
+</html>

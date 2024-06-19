@@ -92,37 +92,7 @@ else $user = '';
     </script>
   </head>
   <body>
-    <?php  echo "<p>$user</p>"; ?>
-    <header>
-      <nav>
-        <div class="logo">Guest House</div>
-        <div class="nav-content">
-          <div>
-            <ul class="nav-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="./rooms/availableRooms.php">Rooms</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <ul class="nav-auth">
-              <li><a href="#" id="signInButton">Sign In</a></li>
-              <li><a href="#" id="signUpButton">Sign Up</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <div class="searchFilter">
-        <div class="search-bar">
-          <input type="text" placeholder="Search" />
-          <button>
-            <img src="" alt="Search" />
-          </button>
-        </div>
-        <div class="filter-bar"></div>
-      </div>
-    </header>
+    <?php include './navBar/navbar.php'; ?>
     <div id="rooms-container"></div>
   </body>
 </html>

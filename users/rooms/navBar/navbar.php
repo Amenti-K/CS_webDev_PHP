@@ -3,6 +3,7 @@ if (isset($_SESSION['emailUser'])){
   $logged = isset($_SESSION['emailUser']);
   $user = $_SESSION['emailUser'];
 } else {
+  $logged = false;
   $user = '';
 }
 ?> 
@@ -15,50 +16,105 @@ if (isset($_SESSION['emailUser'])){
       top: 0;
       left: 0;
       width: 100%;
-      background-color: burlywood;
       box-shadow: black;
       z-index: 5;
-      height: 50px;
+      height: 60px;
+      background-color: blue;
+      margin-bottom: 0;
     }
-    .nav {
-      background-color: blueviolet;
-      height: 50px;
+    nav {
+      box-sizing: border-box;
+      padding: 0 80px 0;
+      height: 100%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .nav_logo{
+    a.nav_logo {
+      text-decoration: none;
       color: black;
-      font-weight: 400;
+      font-size: x-large;
+      font-weight: 500;
       transition: color .4s;
     }
-    .nav_action {
+    
+    .nav_actions {
       display: flex;
+      flex-direction: row;
       align-items: center;
+      justify-content: center;
       column-gap: 1rem;
     }
-    .nav_search, .nav_login, .nav_toggle, .nav_close {
+    
+    .nav_menue .nav_close,
+    .nav_actions .user,
+    .nav_actions .nav_toggle {
       font-size: 1.25rem;
-      color: black;
       cursor: pointer;
       transition: color .4s;
-    }
-    :is(.nav_logo, .nav_search, .nav_login, .nav_toggle, .nav_link):hover {
-      color: blue;
+      color: black;
     }
 
-    /* @media screen and (max-width: 900px) {
+    :is(.nav_logo, .user, .nav_toggle, .nav_link):hover {
+      color: red;
+    }
+
+    .nav_actions .loggedUser {
+      position: relative;
+    }
+
+    .nav_actions .loggedUser .userOptions {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 10px;
+      width: 150px;
+      z-index: 10;
+    }
+
+    .nav_actions .loggedUser:hover .userOptions,
+    .nav_actions .loggedUser .userOptions:hover {
+      display: block;
+      top: 5px;
+    }
+
+    .userOptions li {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .userOptions li a {
+      text-decoration: none;
+      color: black;
+      display: block;
+    }
+
+    /* navigation for mobile */
+    @media screen and (max-width: 1023px) {
       .nav_menu {
         position: fixed;
         top: -100%;
         left: 0;
-        background-color: burlywood;
-        box-shadow: 0 8px 16px hsla(230, 75%, 32%, .15);
+        box-shadow: 0 8px 16px hsl(230, 75%, 32%, .15);
         width: 100%;
-        padding-block: 4.5rem 4rem;
-        transition: top .4s;
+        padding-block: 4.5rem, 4rem;
+        transition: top .6s;
+        background-color: grey;
       }
-    } */
+      .nav_list li {
+        list-style: none;
+      }
+      .nav_list li a {
+        text-decoration: none;
+        color: black; 
+      }
+    }
 
     .nav_list {
       display: flex;
@@ -67,22 +123,25 @@ if (isset($_SESSION['emailUser'])){
       text-align: center;
     }
     .nav_link {
-      color: wheat;
-      font-weight: 500;
+      color: blue;
+      font-weight: 600;
       transition: color .4s;
     }
     .nav_close {
+      cursor: pointer;
       position: absolute;
       top: 1.15rem;
       right: 1.5rem;
     }
     .show-menu {
-      top: 0;
+      top: 0px;
     }
-    /* @media screen and (min-width: 900px) {
-      nav {
-        height: 50px;
-        padding: auto 20%;
+
+    /* for large devices */
+    @media screen and (min-width: 1023px) {
+      .nav {
+        height: 100%;
+        column-gap: 3rem;
       }
       .nav_close, .nav_toggle {
         display: none;
@@ -93,23 +152,36 @@ if (isset($_SESSION['emailUser'])){
       .nav_list {
         flex-direction: row;
         column-gap: 3rem;
+      } 
+      .nav_list li {
+        list-style: none;
       }
-    } */
+      .nav_list li a {
+        text-decoration: none;
+        color: black; 
+      }
+    }
+
+    @media screen and (min-width: 1150px) {
+      .container {
+        margin-inline: auto;
+      }
+    }
   </style>
 </head>
 <header>
   <nav class="nav container">
-    <a href="" class="nav_logo">Logo</a>
+    <a href="" class="nav_logo">Guest House</a>
     <div class="nav_menu" id="nav_menu" >
-      <ul class="nav_list">
+      <ul class="nav_list" >
         <li class="nav_item">
           <a href="" class="nav_link">home</a>
         </li>
         <li class="nav_item">
-          <a href="" class="nav_link">aboutus</a>
+          <a href="" class="nav_link">about us</a>
         </li>
         <li class="nav_item">
-          <a href="" class="nav_link">contacUs</a>
+          <a href="" class="nav_link">contact us</a>
         </li>
         <li class="nav_item">
           <a href="" class="nav_link">rooms</a>
@@ -119,13 +191,21 @@ if (isset($_SESSION['emailUser'])){
         <i class="fa fa-times"></i>
       </div>
     </div> 
-
-    <div class="nav_actions">
-      <div class="user" id="user">
-            <a href="" class="nax_link">
-              <i class="fa fa-user"></i>
-            </a>
-      </div>
+    <div class="nav_actions"> 
+      <?php if ($logged) { ?>
+        <div class="loggedUser">
+          <i class="fa fa-user user"></i>
+          <ul class="userOptions">
+            <li><?php echo $user; ?></li>
+            <li><a href="">Reserved Rooms</a></li>
+            <li><a href="logout.php">Logout</a></li>
+          </ul>
+        </div>
+      <?php } else { ?>
+        <div class="sign">
+          <a href="" class="signUp">Sign Up</a>
+        </div>
+      <?php } ?>
       <div class="nav_toggle" id="nav_toggle">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
@@ -135,11 +215,13 @@ if (isset($_SESSION['emailUser'])){
 <script>
   const navMenu = document.getElementById('nav_menu'),
         navToggle = document.getElementById('nav_toggle'),
-        navClose = document.getElementById('nav_close')
+        navClose = document.getElementById('nav_close');
+
   navToggle.addEventListener('click', () => {
-    navMenu.classList.add('show-menu')
-  })
+    navMenu.classList.add('show-menu');
+  });
+
   navClose.addEventListener('click', () => {
-    navMenu.classList.remove('show-menu')
-  })
+    navMenu.classList.remove('show-menu');
+  });
 </script>
