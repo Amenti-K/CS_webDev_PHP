@@ -23,31 +23,19 @@ if ($result->num_rows > 0) {
     $room = $result->fetch_assoc();
 }
 
-
-$stmt = $conn->prepare("SELECT userName, comment FROM comments WHERE room_id = ?");
+$stmt = $conn->prepare("SELECT userName, comment, created_at FROM comments WHERE room_id = ?");
 $stmt->bind_param("i", $room_id);
 $stmt->execute();
-$stmt->bind_result($userName, $comment);
+$stmt->bind_result($userName, $comment, $created_at);
 
 $comments = [];
 while ($stmt->fetch()) {
-    $comments[] = ['userName' => $userName, 'comment' => $comment];
+    $comments[] = ['userName' => $userName, 'comment' => $comment, 'created_at' => $created_at];
 }
 
 $stmt->close();
 
 $conn->close();
-// this was for rating purpose; we will change it ot favoriting
-// Get the current rating of the room by the logged-in user
-// $current_user_rating = 0;
-// if ($logged) {
-//     $sql = "SELECT rating FROM ratings WHERE room_id = $room_id AND user_email = '$userEmail'";
-//     $result = $conn->query($sql);
-//     if ($result->num_rows > 0) {
-//         $row = $result->fetch_assoc();
-//         $current_user_rating = $row['rating'];
-//     }
-// }
 ?>
 
 <!DOCTYPE html>
@@ -61,46 +49,93 @@ $conn->close();
     <?php include '../navBar/navbar.php'; ?>
     <?php if ($room): ?>
         <div class="room-details">
-            <h1><?php echo htmlspecialchars($room['name']); ?></h1>
-            <?php if ($room['image_path1']): ?>
-                <img src="<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
-            <?php if ($room['image_path2']): ?>
-                <img src="<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
-            <?php if ($room['image_path3']): ?>
-                <img src="<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
-            <?php endif; ?>
-            <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
-            <p>Price: $<?php echo htmlspecialchars($room['price']); ?> per night</p>
-            <p>Location: <?php echo htmlspecialchars($room['location']); ?></p>
-            <p>Number of Bedrooms: <?php echo htmlspecialchars($room['num_bedrooms']); ?></p>
-            <p>Number of Beds: <?php echo htmlspecialchars($room['num_beds']); ?></p>
-            <p>Number of Bathrooms: <?php echo htmlspecialchars($room['num_bathrooms']); ?></p>
-            <p>Kitchen: <?php echo $room['kitchen'] ? 'Yes' : 'No'; ?></p>
-            <p>WiFi: <?php echo $room['wifi'] ? 'Yes' : 'No'; ?></p>
-            <p>AC: <?php echo $room['ac'] ? 'Yes' : 'No'; ?></p>
-            <!-- <p>Average Rating: <?php echo htmlspecialchars($room['average_rating']); ?></p> -->
-            <div class="stars">
-                <?php for ($i = 1; $i <= 5; $i++): ?>
-                    <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
-                <?php endfor; ?>
+            <div class="room-header">
+                <h1><?php echo htmlspecialchars($room['name']); ?></h1>
+                <!-- Favorite button (placeholder functionality) -->
+                <button class="favorite-button">Favorite</button>
             </div>
-        </div>
+            
+            <div class="room-images">
+                <?php if ($room['image_path1']): ?>
+                    <img src="<?php echo htmlspecialchars($room['image_path1']); ?>" alt="Image 1 of <?php echo htmlspecialchars($room['name']); ?>">
+                <?php endif; ?>
+                <?php if ($room['image_path2'] || $room['image_path3']): ?>
+                    <div class="side-by-side-images">
+                        <?php if ($room['image_path2']): ?>
+                            <img src="<?php echo htmlspecialchars($room['image_path2']); ?>" alt="Image 2 of <?php echo htmlspecialchars($room['name']); ?>">
+                        <?php endif; ?>
+                        <?php if ($room['image_path3']): ?>
+                            <img src="<?php echo htmlspecialchars($room['image_path3']); ?>" alt="Image 3 of <?php echo htmlspecialchars($room['name']); ?>">
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <div class="reservation-form">
-            <h2>Reserve this Room</h2>
-            <form id="reservationForm" action="../reservation/reserve_room.php" method="post">
-                <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
-                
-                <label for="check_in_date">Check-In Date:</label>
-                <input type="date" name="check_in_date" id="check_in_date" required><br><br>
-                
-                <label for="check_out_date">Check-Out Date:</label>
-                <input type="date" name="check_out_date" id="check_out_date" required><br><br>
-                
-                <input type="submit" value="Reserve Room">
-            </form>
+            <div class="room-description">
+                <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
+                <p><strong>Basic Amenities:</strong></p>
+                <ul>
+                    <li>Number of Bathrooms: <?php echo htmlspecialchars($room['num_bathrooms']); ?></li>
+                    <li>Number of Beds: <?php echo htmlspecialchars($room['num_beds']); ?></li>
+                    <li>Number of Bedrooms: <?php echo htmlspecialchars($room['num_bedrooms']); ?></li>
+                </ul>
+                <div class="stars">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
+                    <?php endfor; ?>
+                </div>
+            </div>
+
+            <div class="room-amenities">
+                <div class="other-amenities">
+                    <p><strong>Other Amenities:</strong></p>
+                    <ul>
+                        <li><?php echo $room['kitchen'] ? 'Kitchen' : ''; ?></li>
+                        <li><i class="fa fa-wifi" aria-hidden="true"></i><?php echo $room['wifi'] ? 'WiFi' : ''; ?></li>
+                        <li><?php echo $room['ac'] ? 'Air Conditioning' : ''; ?></li>
+                    </ul>
+                </div>
+                <div class="reservation-form">
+                    <h2>Reserve this Room</h2>
+                    <form id="reservationForm" action="../reservation/reserve_room.php" method="post">
+                        <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
+                        
+                        <p><strong>Price per Night:</strong> $<?php echo htmlspecialchars($room['price']); ?></p>
+                        
+                        <label for="check_in_date">Check-In Date:</label>
+                        <input type="date" name="check_in_date" id="check_in_date" required><br><br>
+                        
+                        <label for="check_out_date">Check-Out Date:</label>
+                        <input type="date" name="check_out_date" id="check_out_date" required><br><br>
+                        
+                        <input type="submit" value="Reserve Room">
+                    </form>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h2>Reviews</h2>
+                <div class="average-rating">
+                    <p><strong>Average Rating:</strong></p>
+                    <div class="stars">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+                <div class="comments">
+                    <?php foreach ($comments as $comment) : ?>
+                        <div class="comment">
+                            <div class="profile-icon"><?php echo strtoupper(substr($comment['userName'], 0, 1)); ?></div>
+                            <div class="comment-details">
+                                <strong><?php echo htmlspecialchars($comment['userName']); ?></strong>
+                                <p class="comment-date"><?php echo date('F j, Y', strtotime($comment['created_at'])); ?></p>
+                                <p class="comment-text"><?php echo htmlspecialchars($comment['comment']); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
 
         <!-- Modal for reservation confirmation -->
@@ -113,42 +148,23 @@ $conn->close();
             </div>
         </div>
 
-        <!-- comment section -->
-        <div class="comments-section">
-            <?php foreach ($comments as $comment) : ?>
-                <div class="comment">
-                    <strong><?php echo htmlspecialchars($comment['userName']); ?></strong>
-                    <p><?php echo htmlspecialchars($comment['comment']); ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-    <?php else: ?>
-        <p>Room not found.</p>
-    <?php endif; ?>
-
-    <script>
+            <script>
         // Get the modal
         var modal = document.getElementById("confirmationModal");
-
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
         document.getElementById("reservationForm").onsubmit = function(event) {
             event.preventDefault();
-
             var check_in_date = document.getElementById("check_in_date").value;
             var check_out_date = document.getElementById("check_out_date").value;
             var price_per_night = <?php echo $room['price']; ?>;
@@ -157,7 +173,6 @@ $conn->close();
             var check_out_date_obj = new Date(check_out_date);
             var time_difference = check_out_date_obj.getTime() - check_in_date_obj.getTime();
             var number_of_nights = time_difference / (1000 * 3600 * 24);
-
             if (number_of_nights > 0) {
                 var total_price = number_of_nights * price_per_night;
                 
@@ -166,18 +181,15 @@ $conn->close();
                     Number of Nights: ${number_of_nights}<br>
                     Total Price: $${total_price.toFixed(2)}
                 `;
-
                 document.getElementById("reservationDetails").innerHTML = reservationDetails;
                 modal.style.display = "block";
             } else {
                 alert("Check-out date must be later than check-in date.");
             }
         };
-
         function confirmReservation() {
             document.getElementById("reservationForm").submit();
         }
-
         document.querySelectorAll('.star').forEach(function(star) {
             star.addEventListener('click', function() {
                 var rating = this.getAttribute('data-value');
@@ -206,5 +218,9 @@ $conn->close();
             });
         });
     </script>
+
+    <?php else: ?>
+        <p>Room not found.</p>
+    <?php endif; ?>
 </body>
 </html>

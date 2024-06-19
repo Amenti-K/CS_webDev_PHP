@@ -1,13 +1,13 @@
 <?php 
-if (isset($_SESSION['emailUser'])){
-  $logged = isset($_SESSION['emailUser']);
-  $user = $_SESSION['emailUser'];
+if (isset($_SESSION['emailAdmin'])){
+  $logged = isset($_SESSION['emailAdmin']);
+  $admin = $_SESSION['emailAdmin'];
 } else {
   $logged = false;
-  $user = '';
+  $admin = '';
 }
 // base URL dynamically
-$base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
+$base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
 ?> 
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -181,13 +181,10 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
           <a href="<?php echo $base_url ?>/" class="nav_link">home</a>
         </li>
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/#" class="nav_link">about us</a>
-        </li>
-        <li class="nav_item">
-          <a href="<?php echo $base_url ?>/#" class="nav_link">contact us</a>
-        </li>
-        <li class="nav_item">
           <a href="<?php echo $base_url ?>/rooms/availableRooms.php" class="nav_link">rooms</a>
+        </li>
+        <li class="nav_item">
+          <a href="<?php echo $base_url ?>/user/view_user.php" class="nav_link">users</a>
         </li>
       </ul>
       <div class="nav_close" id="nav_close">
@@ -199,15 +196,14 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
         <div class="loggedUser">
           <i class="fa fa-user user"></i>
           <ul class="userOptions">
-            <li><?php echo $user; ?></li>
-            <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Reserved Rooms</a></li>
+            <li><?php echo $admin; ?></li>
+            <li><a href="">Reserved Rooms</a></li>
             <li><a href="<?php echo $base_url ?>/">Logout</a></li>
           </ul>
         </div>
       <?php } else { ?>
         <div class="sign">
-          <a href="<?php echo $base_url ?>/user/login.html" class="signin">Log In</a>
-          <a href="<?php echo $base_url ?>/user/signup.html" class="signUp">Sign Up</a>
+          <a href="<?php echo $base_url ?>/admins/signupAdmin.html" class="signUp">Sign Up</a>
         </div>
       <?php } ?>
       <div class="nav_toggle" id="nav_toggle">

@@ -21,6 +21,9 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styleUser.css">
 </head>
 <body>
+    <div class="nav">
+        <?php include '../rooms/navBar/navbar.php' ?>
+    </div>
     <main class="table">
         <section class="table_header">
             <h1>Registered Users</h1>

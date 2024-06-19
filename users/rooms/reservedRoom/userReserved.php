@@ -30,6 +30,9 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="styleReservedRooms.css">
 </head>
 <body>
+    <div class="nav">
+        <?php include '../navBar/navbar.php'; ?>
+    </div>
     <main class="table">
         <section class="table_header">
             <h1>My Reserved Rooms</h1>
@@ -43,18 +46,22 @@ $result = $stmt->get_result();
                         <th>Check in date</th>
                         <th>nights</th>
                         <th>Price</th>
+                        <th>     </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
+                            $id = (int) $row['id'];
                             echo "<tr>
                                     <td>{$row['name']}</td>
                                     <td>{$row['description']}</td>
                                     <td>{$row['check_in_date']}</td>
                                     <td>{$row['number_of_nights']}</td>
                                     <td>{$row['price']}</td>
+                                    <td><a href='editReservation.php?id=$id'>Edit</a></td>
+                                    <td><a href='cancelReservation.php?id=$id'>Cancel</a></td>
                                   </tr>";
                         }
                     } else {

@@ -1,17 +1,149 @@
-.room-details,
-.reservation-form {
-  border: 1px solid #ccc;
-  padding: 16px;
-  margin: 16px 0;
+/* roomDetails.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 0;
 }
-.room-details img {
+
+.room-details {
+  border: 1px solid #ccc;
+  padding: 16px 70px;
+  margin-bottom: 16px;
+  background-color: #fff;
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-header h1 {
+  margin: 0;
+}
+
+.favorite-button {
+  background-color: #f5b301;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.room-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.room-images img {
   max-width: 100%;
   height: auto;
 }
-.room-details h2,
-.room-details p {
+
+.side-by-side-images {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-description {
+  margin-top: 20px;
+}
+
+.room-description p {
   margin: 8px 0;
 }
+
+.room-description ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.room-amenities {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.other-amenities,
+.reservation-form {
+  flex: 1;
+}
+
+.reservation-form {
+  padding-left: 20px;
+}
+
+.reviews-section {
+  margin-top: 20px;
+}
+
+.reviews-section h2 {
+  margin-bottom: 10px;
+}
+
+.average-rating {
+  margin-bottom: 20px;
+}
+
+.stars {
+  display: flex;
+}
+
+.star {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star.selected {
+  color: #f5b301;
+}
+
+.comment {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #ccc;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.comment-details {
+  flex: 1;
+}
+
+.comment-details strong {
+  font-size: 16px;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.comment-text {
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+/* Modal Styles (unchanged) */
 /* Modal Styles */
 .modal {
   display: none;
@@ -32,7 +164,9 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  max-width: 500px;
 }
+
 .close {
   color: #aaa;
   float: right;
@@ -44,15 +178,4 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
-}
-.stars {
-  display: flex;
-}
-.star {
-  cursor: pointer;
-  font-size: 24px;
-  color: #ddd;
-}
-.star.selected {
-  color: #f5b301;
 }

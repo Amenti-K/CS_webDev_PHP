@@ -12,9 +12,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.nav {
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 main.table {
+  margin: 25px 60px;
   width: 85vw;
   height: 90vh;
   background-color: #fff5;

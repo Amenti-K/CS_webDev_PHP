@@ -12,34 +12,6 @@ else $user = '';
     <meta charset="UTF-8" />
     <title>Available Rooms</title>
     <link rel="stylesheet" href="stylesRoomUser.css">
-    <style>
-      .room {
-        border: 1px solid #ccc;
-        padding: 16px;
-        margin: 16px 0;
-      }
-      .room img {
-        max-width: 100%;
-        height: auto;
-      }
-      .room h2, .room p {
-        margin: 8px 0;
-      }
-      .room a {
-        text-decoration: none;
-        color: #000;
-      }
-      .stars {
-        display: flex;
-      }
-      .star {
-        font-size: 24px;
-        color: #ddd;
-      }
-      .star.selected {
-        color: #f5b301;
-      }
-    </style>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         fetch("fetch_rooms.php")
@@ -57,14 +29,11 @@ else $user = '';
               roomImg.src = "./roomDetails/" + room.image_path1;
               roomImg.alt = `Image of ${room.name}`;
 
+              const roomNameRating = document.createElement("div");
+              roomNameRating.classList.add("room-name-rating");
+
               const roomName = document.createElement("h2");
               roomName.textContent = room.name;
-
-              const roomDescription = document.createElement("p");
-              roomDescription.textContent = room.description;
-
-              const roomPrice = document.createElement("p");
-              roomPrice.textContent = `Price: $${room.price}`;
 
               const roomRating = document.createElement("div");
               roomRating.classList.add("stars");
@@ -78,11 +47,20 @@ else $user = '';
                 roomRating.appendChild(star);
               }
 
+              roomNameRating.appendChild(roomName);
+              roomNameRating.appendChild(roomRating);
+
+              const roomDescription = document.createElement("p");
+              roomDescription.textContent = room.description.length > 100 ? room.description.substring(0, 100) + '...' : room.description;
+
+              const roomPrice = document.createElement("p");
+              roomPrice.classList.add("room-price");
+              roomPrice.textContent = `Price: $${room.price}`;
+
               roomLink.appendChild(roomImg);
-              roomLink.appendChild(roomName);
+              roomLink.appendChild(roomNameRating);
               roomLink.appendChild(roomDescription);
               roomLink.appendChild(roomPrice);
-              roomLink.appendChild(roomRating);
 
               roomDiv.appendChild(roomLink);
               roomsContainer.appendChild(roomDiv);
