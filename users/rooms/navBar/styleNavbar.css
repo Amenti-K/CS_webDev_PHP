@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+nav {
+  background-color: black;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 100px;
+  position: relative;
+}
+
+nav .logo {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.5rem;
+  font-size: 25px;
+  position: relative;
+}
