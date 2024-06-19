@@ -102,6 +102,7 @@ $conn->close();
     </style>
 </head>
 <body>
+    <?php include '../navBar/navbar.php'; ?>
     <?php if ($room): ?>
         <div class="room-details">
             <?php if ($room['image_path1']): ?>
