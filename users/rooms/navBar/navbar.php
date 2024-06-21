@@ -1,6 +1,6 @@
 <?php 
 if (isset($_SESSION['emailUser'])){
-  $logged = isset($_SESSION['emailUser']);
+  $logged = isset($_SESSION['emailUser']); 
   $user = $_SESSION['emailUser'];
 } else {
   $logged = false;
@@ -12,21 +12,30 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    :root {
+      --primaryColor: #DD7631;
+      --fontColor: #fff;
+      --fontSecondary: #fff4;
+
+      --fontFamily: 'syne', sans-serif;
+      --fontWeight: 800;
+      --fontStyle: normal;
+    }
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
     header{
       position: relative;
       top: 0;
       left: 0;
       width: 100%;
-      box-shadow: black;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       z-index: 5;
-      height: 60px;
-      background-color: blue;
+      height: 100px;
       margin-bottom: 0;
+      background-color: var(--primaryColor);
     }
     nav {
       box-sizing: border-box;
-      padding: 0 80px 0;
+      padding: 0 100px 0;
       height: 100%;
       width: 100%;
       display: flex;
@@ -37,8 +46,10 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       text-decoration: none;
       color: black;
       font-size: x-large;
-      font-weight: 500;
+      font-family: var(--fontFamily);
+      font-weight: var(--fontWeight);
       transition: color .4s;
+      color: var(--fontColor);
     }
     
     .nav_actions {
@@ -46,20 +57,20 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      column-gap: 1rem;
+      column-gap: 1.5rem;
     }
     
     .nav_menue .nav_close,
     .nav_actions .user,
     .nav_actions .nav_toggle {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       cursor: pointer;
       transition: color .4s;
-      color: black;
+      color: #fff;
     }
 
     :is(.nav_logo, .user, .nav_toggle, .nav_link):hover {
-      color: red;
+      color: var(--fontSecondary);
     }
 
     .nav_actions .loggedUser {
@@ -69,13 +80,13 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     .nav_actions .loggedUser .userOptions {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 50%;
       left: 50%;
       transform: translateX(-50%);
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
-      padding: 10px;
+      padding: 5px 10px ;
       width: 150px;
       z-index: 10;
     }
@@ -83,7 +94,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     .nav_actions .loggedUser:hover .userOptions,
     .nav_actions .loggedUser .userOptions:hover {
       display: block;
-      top: 5px;
+      top: 10px;
     }
 
     .userOptions li {
@@ -95,6 +106,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       text-decoration: none;
       color: black;
       display: block;
+      text-align: left;
     }
 
     /* navigation for mobile */
@@ -115,7 +127,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       }
       .nav_list li a {
         text-decoration: none;
-        color: black; 
+        color: var(--fontColor); 
       }
     }
 
@@ -126,7 +138,6 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       text-align: center;
     }
     .nav_link {
-      color: blue;
       font-weight: 600;
       transition: color .4s;
     }
@@ -201,7 +212,8 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
           <ul class="userOptions">
             <li><?php echo $user; ?></li>
             <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Reserved Rooms</a></li>
-            <li><a href="<?php echo $base_url ?>/">Logout</a></li>
+            <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Favorites</a></li>
+            <li class="logout"><a href="<?php echo $base_url ?>/">Logout</a></li>
           </ul>
         </div>
       <?php } else { ?>

@@ -11,7 +11,7 @@ else $user = '';
   <head>
     <meta charset="UTF-8" />
     <title>Available Rooms</title>
-    <link rel="stylesheet" href="stylesRoomUser.css">
+    <link rel="stylesheet" href="./stylesRoomUser.css">
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         fetch("fetch_rooms.php")
@@ -55,7 +55,7 @@ else $user = '';
 
               const roomPrice = document.createElement("p");
               roomPrice.classList.add("room-price");
-              roomPrice.textContent = `Price: $${room.price}`;
+              roomPrice.textContent = `$${room.price} * night`;
 
               roomLink.appendChild(roomImg);
               roomLink.appendChild(roomNameRating);
@@ -70,7 +70,25 @@ else $user = '';
     </script>
   </head>
   <body>
-    <?php include './navBar/navbar.php'; ?>
-    <div id="rooms-container"></div>
+    <div class="nav">
+      <?php include './navBar/navbar.php'; ?>
+    </div>
+    <div id="rooms-container">
+
+      <!-- <div class="room">
+        <a href="">
+          <img src="" alt="" />
+          <div class="room-name-rating">
+            <h2>roomname</h2>
+            <div class="stars">
+              <span class="star"></span>
+            </div>
+            <p>room.description</p>
+            <p class="room-price">room.price</p>
+          </div>
+        </a>
+      </div> -->
+
+    </div>
   </body>
 </html>

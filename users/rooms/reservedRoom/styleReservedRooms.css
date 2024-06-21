@@ -75,6 +75,21 @@ main.table {
   background-color: #fff6;
 }
 
+.edit-link {
+  text-decoration: none;
+  color: blue;
+  font-size: 1.6em;
+  vertical-align: middle;
+}
+.cancel-link {
+  text-decoration: none;
+  color: rgb(255, 0, 0);
+  font-size: 2em;
+  font-weight: bolder;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
 .table_body::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;

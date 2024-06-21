@@ -46,7 +46,7 @@ $result = $stmt->get_result();
                         <th>Check in date</th>
                         <th>nights</th>
                         <th>Price</th>
-                        <th>     </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,8 +60,8 @@ $result = $stmt->get_result();
                                     <td>{$row['check_in_date']}</td>
                                     <td>{$row['number_of_nights']}</td>
                                     <td>{$row['price']}</td>
-                                    <td><a href='editReservation.php?id=$id'>Edit</a></td>
-                                    <td><a href='cancelReservation.php?id=$id'>Cancel</a></td>
+                                    <td><a href='editReservation.php?id=$id' class='edit-link'>&#9998; |</a></td>
+                                    <td><a href='cancelReservation.php?id=$id' class='cancel-link'>&times;</a></td>
                                   </tr>";
                         }
                     } else {

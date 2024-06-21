@@ -2,6 +2,8 @@
 session_start();
 $logged = isset($_SESSION['emailUser']);
 $userEmail = $logged ? $_SESSION['emailUser'] : null;
+// base URL dynamically
+$base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
 
 $servername = "localhost";
 $username = "root";
@@ -23,6 +25,18 @@ if ($result->num_rows > 0) {
     $room = $result->fetch_assoc();
 }
 
+// Check if the room is already a favorite
+$isFavorite = false;
+if ($logged) {
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM favorites WHERE user_email = ? AND room_id = ?");
+    $stmt->bind_param("si", $userEmail, $room_id);
+    $stmt->execute();
+    $stmt->bind_result($favoriteCount);
+    $stmt->fetch();
+    $isFavorite = $favoriteCount > 0;
+    $stmt->close();
+}
+
 $stmt = $conn->prepare("SELECT userName, comment, created_at FROM comments WHERE room_id = ?");
 $stmt->bind_param("i", $room_id);
 $stmt->execute();
@@ -34,7 +48,6 @@ while ($stmt->fetch()) {
 }
 
 $stmt->close();
-
 $conn->close();
 ?>
 
@@ -43,16 +56,29 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Room Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="roomDetails.css">
+    <style>
+        .favorite-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            border: 1px solid black;
+            color: <?php echo $isFavorite ? 'red' : 'white'; ?>;
+        }
+    </style>
 </head>
 <body>
-    <?php include '../navBar/navbar.php'; ?>
+    <div class="nav">
+        <?php include '../navBar/navbar.php'; ?>
+    </div>
     <?php if ($room): ?>
         <div class="room-details">
             <div class="room-header">
                 <h1><?php echo htmlspecialchars($room['name']); ?></h1>
-                <!-- Favorite button (placeholder functionality) -->
-                <button class="favorite-button">Favorite</button>
+                <!-- Favorite button with heart icon -->
+                <button class="favorite-button" id="favoriteButton"><i class="fa fa-bookmark-o" aria-hidden="true"></i></button>
             </div>
             
             <div class="room-images">
@@ -72,35 +98,35 @@ $conn->close();
             </div>
 
             <div class="room-description">
-                <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
-                <p><strong>Basic Amenities:</strong></p>
-                <ul>
-                    <li>Number of Bathrooms: <?php echo htmlspecialchars($room['num_bathrooms']); ?></li>
-                    <li>Number of Beds: <?php echo htmlspecialchars($room['num_beds']); ?></li>
-                    <li>Number of Bedrooms: <?php echo htmlspecialchars($room['num_bedrooms']); ?></li>
-                </ul>
-                <div class="stars">
-                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                        <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
-                    <?php endfor; ?>
+                <div class="name_rating">
+                    <p><?php echo nl2br(htmlspecialchars($room['description'])); ?></p>
+                    <div class="stars">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
+                        <?php endfor; ?>
+                    </div>
                 </div>
+                <ul>
+                    <li><?php echo htmlspecialchars($room['num_bedrooms']); ?>   Bedrooms   *</li>
+                    <li><?php echo htmlspecialchars($room['num_beds']); ?>   Beds   *</li>
+                    <li><?php echo htmlspecialchars($room['num_bathrooms']); ?>   Baths</li>
+                </ul>
             </div>
 
             <div class="room-amenities">
                 <div class="other-amenities">
-                    <p><strong>Other Amenities:</strong></p>
+                    <h2><strong>what this place offers</strong></h2>
                     <ul>
                         <li><?php echo $room['kitchen'] ? 'Kitchen' : ''; ?></li>
                         <li><i class="fa fa-wifi" aria-hidden="true"></i><?php echo $room['wifi'] ? 'WiFi' : ''; ?></li>
                         <li><?php echo $room['ac'] ? 'Air Conditioning' : ''; ?></li>
+                        
                     </ul>
                 </div>
                 <div class="reservation-form">
-                    <h2>Reserve this Room</h2>
+                    <h2><strong>$ <?php echo htmlspecialchars($room['price']); ?></strong> night </p>
                     <form id="reservationForm" action="../reservation/reserve_room.php" method="post">
                         <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
-                        
-                        <p><strong>Price per Night:</strong> $<?php echo htmlspecialchars($room['price']); ?></p>
                         
                         <label for="check_in_date">Check-In Date:</label>
                         <input type="date" name="check_in_date" id="check_in_date" required><br><br>
@@ -114,9 +140,8 @@ $conn->close();
             </div>
 
             <div class="reviews-section">
-                <h2>Reviews</h2>
                 <div class="average-rating">
-                    <p><strong>Average Rating:</strong></p>
+                    <p><strong>Average Rating </strong></p>
                     <div class="stars">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
                             <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
@@ -126,10 +151,12 @@ $conn->close();
                 <div class="comments">
                     <?php foreach ($comments as $comment) : ?>
                         <div class="comment">
-                            <div class="profile-icon"><?php echo strtoupper(substr($comment['userName'], 0, 1)); ?></div>
-                            <div class="comment-details">
+                            <div class="profile">
+                                <div class="profile-icon"><?php echo strtoupper(substr($comment['userName'], 0, 1)); ?></div>
                                 <strong><?php echo htmlspecialchars($comment['userName']); ?></strong>
-                                <p class="comment-date"><?php echo date('F j, Y', strtotime($comment['created_at'])); ?></p>
+                            </div>
+                            <div class="comment-details">
+                                <p class="comment-date">on <?php echo date('F j, Y', strtotime($comment['created_at'])); ?></p>
                                 <p class="comment-text"><?php echo htmlspecialchars($comment['comment']); ?></p>
                             </div>
                         </div>
@@ -148,7 +175,7 @@ $conn->close();
             </div>
         </div>
 
-            <script>
+        <script>
         // Get the modal
         var modal = document.getElementById("confirmationModal");
         // Get the <span> element that closes the modal
@@ -216,6 +243,30 @@ $conn->close();
                     window.location.href = 'signup.php';
                 <?php endif; ?>
             });
+        });
+
+        // Favorite button click event
+        document.getElementById("favoriteButton").addEventListener("click", function() {
+            <?php if ($logged): ?>
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "favorite_room.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            var favoriteButton = document.getElementsByClassName("fa-bookmark-o");
+                            favoriteButton.style.color = response.isFavorite ? 'red' : 'white';
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    }
+                };
+                xhr.send("room_id=" + <?php echo $room_id; ?>);
+            <?php else: ?>
+                alert('Join our community.');
+                window.location.href = '<?php echo $base_url ?>/user/signup.html';
+            <?php endif; ?>
         });
     </script>
 
