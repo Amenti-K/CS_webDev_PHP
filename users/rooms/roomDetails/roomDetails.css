@@ -1,6 +1,7 @@
-/* Variables for repeated values */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
-  --font-family: Arial, sans-serif;
+  --font-family: "Montserrat", sans-serif;
   --border-color: #ccc;
   --background-color: #fff;
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

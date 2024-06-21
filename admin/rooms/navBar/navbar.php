@@ -13,20 +13,31 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    :root {
+      --primaryColor: rgb(22, 120, 186); /* Lighter shade for button hover */
+      --fontColor: #fff;
+      --fontSecondary: #fff4; 
+
+      /* --fontFamily: 'syne', sans-serif; */
+      --fontFamily: 'Montserrat', sans-serif;
+      --fontWeight: 800;
+      --fontStyle: normal;
+    }
     header{
       position: relative;
       top: 0;
       left: 0;
       width: 100%;
-      box-shadow: black;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       z-index: 5;
-      height: 60px;
-      background-color: blue;
+      height: 100px;
       margin-bottom: 0;
+      background-color: var(--primaryColor);
     }
     nav {
       box-sizing: border-box;
-      padding: 0 80px 0;
+      padding: 0 9%;
       height: 100%;
       width: 100%;
       display: flex;
@@ -35,10 +46,10 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
     }
     a.nav_logo {
       text-decoration: none;
-      color: black;
-      font-size: x-large;
-      font-weight: 500;
+      font-size: 2.5rem;
+      font-family: var(--fontFamily);
       transition: color .4s;
+      color: var(--fontColor);
     }
     
     .nav_actions {
@@ -46,20 +57,24 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      column-gap: 1rem;
+      column-gap: 1.5rem;
     }
     
     .nav_menue .nav_close,
     .nav_actions .user,
     .nav_actions .nav_toggle {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       cursor: pointer;
       transition: color .4s;
-      color: black;
+      color: #fff;
     }
 
-    :is(.nav_logo, .user, .nav_toggle, .nav_link):hover {
-      color: red;
+    :is(.nav_logo, .user, .nav_toggle):hover {
+      color: var(--primaryColor);
+    }
+
+    .nav_link:hover{
+      transform: scale(1.2);
     }
 
     .nav_actions .loggedUser {
@@ -69,13 +84,13 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
     .nav_actions .loggedUser .userOptions {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 50%;
       left: 50%;
       transform: translateX(-50%);
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
-      padding: 10px;
+      padding: 5px 10px ;
       width: 150px;
       z-index: 10;
     }
@@ -83,18 +98,20 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
     .nav_actions .loggedUser:hover .userOptions,
     .nav_actions .loggedUser .userOptions:hover {
       display: block;
-      top: 5px;
+      top: 10px;
     }
 
     .userOptions li {
       list-style: none;
       margin: 10px 0;
+      color: var(--primaryColor);
     }
 
     .userOptions li a {
       text-decoration: none;
       color: black;
       display: block;
+      text-align: left;
     }
 
     /* navigation for mobile */
@@ -107,18 +124,21 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
         width: 100%;
         padding-block: 4.5rem, 4rem;
         transition: top .6s;
-        background-color: grey;
+        background-color: var(--primaryColor);
         z-index: 10;
       }
       .nav_list li {
         list-style: none;
+        display: flex;
+        text-align: center;
       }
       .nav_list li a {
         text-decoration: none;
-        color: black; 
+        color: var(--fontColor); 
+        margin: auto;
       }
     }
-
+    
     .nav_list {
       display: flex;
       flex-direction: column;
@@ -126,18 +146,23 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
       text-align: center;
     }
     .nav_link {
-      color: blue;
-      font-weight: 600;
-      transition: color .4s;
+      display: flex;
+      color: var(--fontColor);
+      transition: .4s;
+      letter-spacing: .1rem;
     }
     .nav_close {
       cursor: pointer;
       position: absolute;
+      scale: 1.2;
       top: 1.15rem;
       right: 1.5rem;
+      color: var(--fontColor);
     }
     .show-menu {
-      top: 0px;
+      top: 5%;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
 
     /* for large devices */
@@ -161,7 +186,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
       }
       .nav_list li a {
         text-decoration: none;
-        color: black; 
+        color: var(--fontColor) 
       }
     }
 

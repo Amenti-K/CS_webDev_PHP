@@ -1,0 +1,11 @@
+.about-content,
+.contact-content {
+  text-align: center;
+}
+a {
+  text-decoration: none;
+  font-family: fantasy;
+}
+.contact-content h2 {
+  text-decoration: underline;
+}

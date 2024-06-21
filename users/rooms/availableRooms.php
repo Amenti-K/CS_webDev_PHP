@@ -55,7 +55,7 @@ else $user = '';
 
               const roomPrice = document.createElement("p");
               roomPrice.classList.add("room-price");
-              roomPrice.textContent = `$${room.price} * night`;
+              roomPrice.textContent = `$ ${room.price} * night`;
 
               roomLink.appendChild(roomImg);
               roomLink.appendChild(roomNameRating);

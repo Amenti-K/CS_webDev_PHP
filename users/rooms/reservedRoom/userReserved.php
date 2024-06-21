@@ -27,7 +27,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Reserved Rooms</title>
-    <link rel="stylesheet" href="styleReservedRooms.css">
+    <link rel="stylesheet" href="./styleReservedRooms.css">
 </head>
 <body>
     <div class="nav">

@@ -12,16 +12,18 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
     :root {
-      --primaryColor: #DD7631;
+      --primaryColor: rgb(22, 120, 186); /* Lighter shade for button hover */
       --fontColor: #fff;
-      --fontSecondary: #fff4;
+      --fontSecondary: #fff4; 
 
-      --fontFamily: 'syne', sans-serif;
+      /* --fontFamily: 'syne', sans-serif; */
+      --fontFamily: 'Montserrat', sans-serif;
       --fontWeight: 800;
       --fontStyle: normal;
     }
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
     header{
       position: relative;
       top: 0;
@@ -35,7 +37,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     }
     nav {
       box-sizing: border-box;
-      padding: 0 100px 0;
+      padding: 0 9%;
       height: 100%;
       width: 100%;
       display: flex;
@@ -44,10 +46,8 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     }
     a.nav_logo {
       text-decoration: none;
-      color: black;
-      font-size: x-large;
+      font-size: 2.5rem;
       font-family: var(--fontFamily);
-      font-weight: var(--fontWeight);
       transition: color .4s;
       color: var(--fontColor);
     }
@@ -69,8 +69,12 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       color: #fff;
     }
 
-    :is(.nav_logo, .user, .nav_toggle, .nav_link):hover {
-      color: var(--fontSecondary);
+    :is(.nav_logo, .user, .nav_toggle):hover {
+      color: var(--primaryColor);
+    }
+
+    .nav_link:hover{
+      transform: scale(1.2);
     }
 
     .nav_actions .loggedUser {
@@ -100,6 +104,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     .userOptions li {
       list-style: none;
       margin: 10px 0;
+      color: var(--primaryColor);
     }
 
     .userOptions li a {
@@ -119,18 +124,21 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
         width: 100%;
         padding-block: 4.5rem, 4rem;
         transition: top .6s;
-        background-color: grey;
+        background-color: var(--primaryColor);
         z-index: 10;
       }
       .nav_list li {
         list-style: none;
+        display: flex;
+        text-align: center;
       }
       .nav_list li a {
         text-decoration: none;
         color: var(--fontColor); 
+        margin: auto;
       }
     }
-
+    
     .nav_list {
       display: flex;
       flex-direction: column;
@@ -138,17 +146,23 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       text-align: center;
     }
     .nav_link {
-      font-weight: 600;
-      transition: color .4s;
+      display: flex;
+      color: var(--fontColor);
+      transition: .4s;
+      letter-spacing: .1rem;
     }
     .nav_close {
       cursor: pointer;
       position: absolute;
+      scale: 1.2;
       top: 1.15rem;
       right: 1.5rem;
+      color: var(--fontColor);
     }
     .show-menu {
-      top: 0px;
+      top: 5%;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
 
     /* for large devices */
@@ -172,7 +186,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       }
       .nav_list li a {
         text-decoration: none;
-        color: black; 
+        color: var(--fontColor) 
       }
     }
 
@@ -189,16 +203,16 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
     <div class="nav_menu" id="nav_menu" >
       <ul class="nav_list" >
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/" class="nav_link">home</a>
+          <a href="<?php echo $base_url ?>/" class="nav_link">Home</a>
         </li>
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/#" class="nav_link">about us</a>
+          <a href="<?php echo $base_url ?>/#" class="nav_link">About Us</a>
         </li>
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/#" class="nav_link">contact us</a>
+          <a href="<?php echo $base_url ?>/#" class="nav_link">Contact Us</a>
         </li>
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/rooms/availableRooms.php" class="nav_link">rooms</a>
+          <a href="<?php echo $base_url ?>/rooms/availableRooms.php" class="nav_link">Guest Homes</a>
         </li>
       </ul>
       <div class="nav_close" id="nav_close">
@@ -212,7 +226,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
           <ul class="userOptions">
             <li><?php echo $user; ?></li>
             <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Reserved Rooms</a></li>
-            <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Favorites</a></li>
+            <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/favorite/fetch_favorites.php">Favorites</a></li>
             <li class="logout"><a href="<?php echo $base_url ?>/">Logout</a></li>
           </ul>
         </div>

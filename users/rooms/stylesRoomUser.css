@@ -1,11 +1,26 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --primaryColor: rgb(22, 120, 186); /* Lighter shade for button hover */
+  --fontColor: #fff;
+  --fontSecondary: #fff4;
+
+  /* --fontFamily: 'syne', sans-serif; */
+  --fontFamily: "Montserrat", sans-serif;
+  --fontWeight: 800;
+  --fontStyle: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
   width: 100%;
-  font-family: Arial, sans-serif;
   padding: 0;
   margin: 0;
-  top: 0;
-  left: 0;
 }
 
 #rooms-container {
@@ -13,17 +28,17 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   box-sizing: border-box;
-  padding: 20px 100px;
+  padding: 20px 7%;
 }
 
 .room {
   flex: 1 1 calc(100% - 200px); /* Default to 1 card per row with some padding */
   max-width: calc(
-    100% - 80px
+    100% - 14%
   ); /* Ensure the card doesn't exceed container width */
   margin: 10px 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -39,6 +54,7 @@ body {
   text-decoration: none;
   color: inherit;
   display: block;
+  padding-bottom: 3%;
 }
 
 .room img {
@@ -50,12 +66,12 @@ body {
 .room-name-rating {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+  padding: 10px 5%;
 }
 
 .room h2 {
-  font-size: 1.2em;
+  font-family: var(--fontFamily);
+  font-size: 1.3em;
   margin: 0;
 }
 
@@ -76,8 +92,8 @@ body {
 }
 
 .room p {
-  padding: 0 10px;
-  margin: 10px 0;
+  padding: 0 5%;
+  margin: 0 0 10px;
   font-size: 0.9em;
 }
 

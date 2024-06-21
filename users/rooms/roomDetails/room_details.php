@@ -106,21 +106,24 @@ $conn->close();
                         <?php endfor; ?>
                     </div>
                 </div>
-                <ul>
-                    <li><?php echo htmlspecialchars($room['num_bedrooms']); ?>   Bedrooms   *</li>
-                    <li><?php echo htmlspecialchars($room['num_beds']); ?>   Beds   *</li>
-                    <li><?php echo htmlspecialchars($room['num_bathrooms']); ?>   Baths</li>
-                </ul>
             </div>
 
             <div class="room-amenities">
                 <div class="other-amenities">
                     <h2><strong>what this place offers</strong></h2>
                     <ul>
-                        <li><?php echo $room['kitchen'] ? 'Kitchen' : ''; ?></li>
-                        <li><i class="fa fa-wifi" aria-hidden="true"></i><?php echo $room['wifi'] ? 'WiFi' : ''; ?></li>
-                        <li><?php echo $room['ac'] ? 'Air Conditioning' : ''; ?></li>
-                        
+                        <li><?php echo htmlspecialchars($room['num_bedrooms']); ?>   Bedrooms</li>
+                        <li><?php echo htmlspecialchars($room['num_beds']); ?>   Beds   </li>
+                        <li><?php echo htmlspecialchars($room['num_bathrooms']); ?>   Baths</li>
+                        <?php if ($room['kitchen'] > 0 ) { ?>
+                            <li><?php echo $room['kitchen'] ? 'Kitchen' : ''; ?></li> 
+                        <?php } ?>
+                        <?php if ($room['wifi'] > 0 ) { ?>
+                            <li><i class="fa fa-wifi" aria-hidden="true"></i><?php echo $room['wifi'] ? 'WiFi' : ''; ?></li>
+                        <?php } ?>
+                        <?php if ($room['ac'] > 0 ) { ?>
+                            <li><?php echo $room['ac'] ? 'Air Conditioning' : ''; ?></li> 
+                        <?php } ?>
                     </ul>
                 </div>
                 <div class="reservation-form">
