@@ -1,23 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+:root {
+  --font-family: "Montserrat", sans-serif;
+  --border-color: #ccc;
+  --background-color: #fff;
+  --box-shadow: 0px 8px 36px rgba(0, 0, 0, 0.1);
+  --hover-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --star-color: #ddd;
+  --selected-star-color: #f5b301;
+  --modal-background: rgba(0, 0, 0, 0.4);
+  --modal-content-bg: #fefefe;
+  --primaryColor: rgb(22, 120, 186); /* Lighter shade for button hover */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-family);
 }
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+  font-family: var(--font-family);
   padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
 }
 
 .room-details {
-  border: 1px solid #ccc;
-  padding: 16px 70px;
+  border: 1px solid var(--border-color);
+  padding: 20px 8%;
   margin-bottom: 16px;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 
 .room-header {
@@ -30,37 +45,75 @@ body {
   margin: 0;
 }
 
-.favorite-button {
-  background-color: #f5b301;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  cursor: pointer;
+.adminbuttons {
+  display: flex;
+  gap: 10px;
+  & button {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.1rem;
+    letter-spacing: 0.15rem;
+    cursor: pointer;
+    background-color: var(--primaryColor);
+    color: white;
+  }
 }
 
 .room-images {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 10px;
   margin-top: 10px;
+  height: calc(100vh / 1.75);
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-.room-images img {
-  max-width: 100%;
-  height: auto;
+.room-images > img {
+  width: 65%;
+  object-fit: cover;
 }
 
 .side-by-side-images {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  width: 40%;
+}
+
+.side-by-side-images img {
+  height: 50%;
+  width: 100%;
+  object-fit: cover;
+}
+.room-images img:hover {
+  /* padding: 10px;
+  transform: scale(1.5); */
+  object-fit: cover;
+  z-index: 2;
 }
 
 .room-description {
   margin-top: 20px;
+  margin-right: 10%;
+}
+.room-description .name_rating {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.room-description .stars {
+  display: flex;
 }
 
 .room-description p {
-  margin: 8px 0;
+  font-family: var(--font-family);
+  font-size: larger;
+  margin: 4px 0 8px;
 }
 
 .room-description ul {
@@ -70,29 +123,61 @@ body {
 
 .room-amenities {
   display: flex;
-  justify-content: space-between;
+  gap: 40px;
   margin-top: 20px;
 }
 
 .other-amenities {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  & p {
+    font-size: 2rem;
+  }
+}
+.other-amenities ul {
+  list-style: none;
+  font-size: 1.25rem;
+}
+.other-amenities ul li i {
+  color: var(--primaryColor);
+  margin-right: 20px;
+  font-size: 1.5rem;
+}
+
+.reviews-section {
+  padding: 10px 8%;
+}
+
+.reviews-section .average-rating {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  font-family: var(--font-family);
+  font-size: 2rem;
+  & p {
+    margin-right: 20px;
+  }
 }
 
 .stars {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .star {
-  font-size: 24px;
-  color: #ddd;
+  font-size: 2rem;
+  color: var(--star-color);
   cursor: pointer;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 
 .star.selected {
-  color: #f5b301;
+  color: var(--selected-star-color);
 }
 
+/* popup starts */
 .popup {
   display: none;
   position: fixed;
@@ -107,15 +192,14 @@ body {
   padding: 20px;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-
-  border: 1px solid hsl(258, 58%, 42%);
+  /* border: 1px solid hsl(258, 58%, 42%); */
+  border: 1px solid var(--primaryColor);
 }
 
 .popup .popup-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin-bottom: 10px;
 }
 
@@ -132,7 +216,6 @@ body {
   float: right;
   font-size: 28px;
   font-weight: bold;
-
   margin-right: 15px;
 }
 
@@ -148,7 +231,7 @@ body {
   justify-content: space-between;
 }
 
-/**n  sklfnadnf **/
+/* Edit Form and Remove Dialog */
 .popup form .user-details {
   display: flex;
   flex-wrap: wrap;
@@ -196,7 +279,7 @@ form .amenities {
   font-weight: 500;
   border-radius: 5px;
   letter-spacing: 0.5px;
-  background-color: hsl(258, 58%, 42%);
+  background-color: var(--primaryColor);
 }
 
 #remove-popup {
@@ -213,4 +296,186 @@ form .amenities {
     height: 100%;
     width: calc(100% / 2 - 80px);
   }
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+  .room-images {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .room-images > img,
+  .side-by-side-images img {
+    width: 100%;
+    height: 150px;
+  }
+  .side-by-side-images img {
+    width: calc(100vw - 40%);
+  }
+
+  .room-amenities {
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+    gap: 20px;
+  }
+  .other-amenities,
+  .reservation-form {
+    width: calc(100vw - 40%);
+    margin: auto;
+    align-items: center;
+  }
+}
+
+.comments {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 25px 25px 0;
+  border-radius: 5px;
+  width: 40%;
+  box-shadow: 0 4px 8px rgb(139, 124, 124);
+}
+
+.comment .profile {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  background-color: var(--border-color);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  margin: auto 10px;
+}
+
+.profile strong {
+  font-size: 16px;
+}
+
+.comment-details {
+  flex: 1;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.comment-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+/* comments */
+.comment-form {
+  position: relative;
+  max-width: 500px;
+  top: -40px;
+  margin: auto 60px;
+  padding: 20px;
+  border-radius: 5px;
+}
+.comment-form h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+.comment-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.comment-form button {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  background-color: var(--primaryColor);
+  color: white;
+}
+.comment-form button:hover {
+  background-color: var(--primaryColor);
+}
+.comment {
+  margin-bottom: 15px;
+}
+.comment .profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.comment .profile-icon {
+  background-color: var(--primaryColor);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+.comment .comment-text {
+  max-height: 7.6em; /* approximately 3 lines */
+  overflow: hidden;
+  position: relative;
+}
+.comment .comment-details {
+  margin-left: 15px;
+}
+
+.comment button .showMoreComments {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  background-color: var(--primaryColor);
+  color: white;
+}
+.comment.expanded .comment-text {
+  max-height: none;
+}
+.comment.expanded .see-more {
+  display: inline;
+}
+.comment-text[data-truncated="true"]::after {
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: white;
+}
+.comment.hidden {
+  display: none;
 }

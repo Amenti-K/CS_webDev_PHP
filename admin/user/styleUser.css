@@ -6,8 +6,6 @@
 }
 
 body {
-  background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5DLVjC1A5s9dpLtSLeW8IWu5Iufp0N_Tvkg&s")
-    center / cover;
   min-height: 100vh;
   display: flex;
   justify-content: center;

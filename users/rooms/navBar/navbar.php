@@ -114,6 +114,15 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       text-align: left;
     }
 
+    .nav_actions .sign {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+    .nav_actions .sign a {
+      text-decoration: none;
+    }
+
     /* navigation for mobile */
     @media screen and (max-width: 1023px) {
       .nav_menu {
@@ -139,10 +148,11 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
       }
     }
     
+
     .nav_list {
       display: flex;
       flex-direction: column;
-      row-gap: 2.5rem;
+      row-gap: 1rem;
       text-align: center;
     }
     .nav_link {
@@ -212,7 +222,7 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
           <a href="<?php echo $base_url ?>/#" class="nav_link">Contact Us</a>
         </li>
         <li class="nav_item">
-          <a href="<?php echo $base_url ?>/rooms/availableRooms.php" class="nav_link">Guest Homes</a>
+          <a href="<?php echo $base_url ?>/rooms/availableRooms.php" class="nav_link">Guest Houses</a>
         </li>
       </ul>
       <div class="nav_close" id="nav_close">
@@ -227,13 +237,13 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/users';
             <li><?php echo $user; ?></li>
             <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/userReserved.php">Reserved Rooms</a></li>
             <li><a href="<?php echo $base_url ?>/rooms/reservedRoom/favorite/fetch_favorites.php">Favorites</a></li>
-            <li class="logout"><a href="<?php echo $base_url ?>/">Logout</a></li>
+            <li class="logout"><a href="<?php echo $base_url ?>/rooms/navBar/logout.php">Logout</a></li>
           </ul>
         </div>
       <?php } else { ?>
         <div class="sign">
-          <a href="<?php echo $base_url ?>/user/login.html" class="signin">Log In</a>
-          <a href="<?php echo $base_url ?>/user/signup.html" class="signUp">Sign Up</a>
+          <a href="<?php echo $base_url ?>/user/index.html" class="signUp nav_link">Sign Up</a>
+          <a href="<?php echo $base_url ?>/user/index.html" class="signin nav_link">Log In</a>
         </div>
       <?php } ?>
       <div class="nav_toggle" id="nav_toggle">

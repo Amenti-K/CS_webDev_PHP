@@ -1,42 +1,13 @@
-/* Define root variables */
-:root {
-  --primary-color: #0b3c5d; /* Dark blue */
-  --accent-color: rgb(11, 79, 124); /* Dark orange */
-  --button-hover-color: rgb(22, 120, 186); /* Lighter shade for button hover */
-  --text-color: rgb(233, 231, 231); /* White text */
-  --background-color: rgb(229, 220, 213); /* Background color */
-  --header-bg-color: rgb(55, 106, 175); /* Adjusted blue color */
-  --header-bg-color-opacity: rgba(
-    55,
-    106,
-    175,
-    0.9
-  ); /* Adjusted blue color with opacity */
-  --even-row-bg-color: rgba(0, 0, 0, 0.03);
-  --hover-row-bg-color: rgba(255, 255, 255, 0.6);
-  --edit-link-color: rgba(
-    55,
-    106,
-    175,
-    0.7
-  ); /* Adjusted blue color with opacity */
-  --edit-link-hover-color: rgba(55, 106, 175, 1); /* Adjusted blue color */
-  --cancel-link-color: rgba(255, 0, 0, 0.5);
-  --cancel-link-hover-color: rgba(255, 0, 0, 1);
-  --scrollbar-thumb-color: rgba(0, 0, 0, 0.25);
-}
-
-/* Apply variables */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
-  color: var(--text-color);
 }
 
 body {
-  background-color: #f5f5f5; /* Original unchanged */
+  background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5DLVjC1A5s9dpLtSLeW8IWu5Iufp0N_Tvkg&s")
+    center / cover;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -54,11 +25,9 @@ main.table {
   margin: 25px 60px;
   width: 85vw;
   height: 90vh;
-  background-color: var(
-    --background-color
-  ); /* Changed background color to variable */
+  background-color: #fff5;
   backdrop-filter: blur(7px);
-  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.4rem 0.8rem #0005;
   border-radius: 0.8rem;
   overflow: hidden;
   display: flex;
@@ -68,12 +37,8 @@ main.table {
 .table_header {
   width: 100%;
   height: 10%;
-  background-color: var(
-    --header-bg-color
-  ); /* Changed background color to variable */
+  background-color: #fff4;
   padding: 0.8rem 1rem;
-  text-align: center;
-  box-shadow: 0 2px black;
 }
 
 .table_body {
@@ -92,57 +57,37 @@ main.table {
   width: fit-content;
   padding: 1rem;
   text-align: left;
-  color: black; /* Kept default color for readability */
 }
 
 .table_body thead th {
   position: sticky;
   top: 0;
   left: 0;
-  background-color: var(
-    --header-bg-color-opacity
-  ); /* Changed background color to variable */
+  background-color: #d5d1defe;
   z-index: 1;
 }
 
 .table_body tbody tr:nth-child(even) {
-  background-color: var(
-    --even-row-bg-color
-  ); /* Changed background color to variable */
+  background-color: #0000000b;
 }
 
 .table_body tbody tr:hover {
-  background-color: var(
-    --hover-row-bg-color
-  ); /* Changed background color to variable */
+  background-color: #fff6;
 }
 
 .edit-link {
   text-decoration: none;
-  color: var(--edit-link-color); /* Changed link color to variable */
+  color: blue;
   font-size: 1.6em;
   vertical-align: middle;
 }
-
-.edit-link:hover {
-  color: var(
-    --edit-link-hover-color
-  ); /* Changed link hover color to variable */
-}
-
 .cancel-link {
   text-decoration: none;
-  color: var(--cancel-link-color); /* Kept original color as variable */
+  color: rgb(255, 0, 0);
   font-size: 2em;
   font-weight: bolder;
   vertical-align: middle;
   margin-left: 5px;
-}
-
-.cancel-link:hover {
-  color: var(
-    --cancel-link-hover-color
-  ); /* Changed cancel link hover color to variable */
 }
 
 .table_body::-webkit-scrollbar {
@@ -152,9 +97,7 @@ main.table {
 
 .table_body::-webkit-scrollbar-thumb {
   border-radius: 0.5rem;
-  background-color: var(
-    --scrollbar-thumb-color
-  ); /* Changed scrollbar thumb color to variable */
+  background-color: #0004;
   visibility: hidden;
 }
 

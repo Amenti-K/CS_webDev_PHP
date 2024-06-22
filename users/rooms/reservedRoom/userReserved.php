@@ -53,15 +53,15 @@ $result = $stmt->get_result();
                     <?php
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            $id = (int) $row['id'];
+                            $checkInDate = $row['check_in_date'];
                             echo "<tr>
                                     <td>{$row['name']}</td>
                                     <td>{$row['description']}</td>
                                     <td>{$row['check_in_date']}</td>
                                     <td>{$row['number_of_nights']}</td>
                                     <td>{$row['price']}</td>
-                                    <td><a href='editReservation.php?id=$id' class='edit-link'>&#9998; |</a></td>
-                                    <td><a href='cancelReservation.php?id=$id' class='cancel-link'>&times;</a></td>
+                                    <td><a href='editReservation.php?checkInDate=$checkInDate' class='edit-link'>&#9998; |</a>
+                                    <a href='cancelReservation.php?checkInDate=$checkInDate' class='cancel-link'>&times;</a></td>
                                   </tr>";
                         }
                     } else {

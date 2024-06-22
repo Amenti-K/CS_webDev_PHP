@@ -37,7 +37,7 @@ if ($logged) {
     $stmt->close();
 }
 
-$stmt = $conn->prepare("SELECT userName, comment, created_at FROM comments WHERE room_id = ?");
+$stmt = $conn->prepare("SELECT userName, comment, created_at FROM comments WHERE room_id = ? ORDER BY created_at DESC");
 $stmt->bind_param("i", $room_id);
 $stmt->execute();
 $stmt->bind_result($userName, $comment, $created_at);
@@ -63,9 +63,9 @@ $conn->close();
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 24px;
-            border: 1px solid black;
-            color: <?php echo $isFavorite ? 'red' : 'white'; ?>;
+            font-size: 30px;
+            border: none;
+            color: <?php echo $isFavorite ? 'red' : 'gray'; ?>;
         }
     </style>
 </head>
@@ -77,8 +77,7 @@ $conn->close();
         <div class="room-details">
             <div class="room-header">
                 <h1><?php echo htmlspecialchars($room['name']); ?></h1>
-                <!-- Favorite button with heart icon -->
-                <button class="favorite-button" id="favoriteButton"><i class="fa fa-bookmark-o" aria-hidden="true"></i></button>
+                <button class="favorite-button" id="favoriteButton">&#10084;</button>
             </div>
             
             <div class="room-images">
@@ -110,31 +109,32 @@ $conn->close();
 
             <div class="room-amenities">
                 <div class="other-amenities">
-                    <h2><strong>what this place offers</strong></h2>
+                    <p>What this place offers</p>
                     <ul>
-                        <li><?php echo htmlspecialchars($room['num_bedrooms']); ?>   Bedrooms</li>
-                        <li><?php echo htmlspecialchars($room['num_beds']); ?>   Beds   </li>
-                        <li><?php echo htmlspecialchars($room['num_bathrooms']); ?>   Baths</li>
+                        <li><i class="fa fa-bed" aria-hidden="true"></i><?php echo htmlspecialchars($room['num_bedrooms']); ?> Bedrooms</li>
+                        <li><i class="fa fa-user" aria-hidden="true"></i><?php echo htmlspecialchars($room['num_beds']); ?> Beds</li>
+                        <li><i class="fa fa-bath" aria-hidden="true"></i> <?php echo htmlspecialchars($room['num_bathrooms']); ?> Baths</li>
                         <?php if ($room['kitchen'] > 0 ) { ?>
-                            <li><?php echo $room['kitchen'] ? 'Kitchen' : ''; ?></li> 
+                            
+                            <li><i class="fa fa-utensils" aria-hidden="true"></i>  Kitchen</li> 
                         <?php } ?>
                         <?php if ($room['wifi'] > 0 ) { ?>
-                            <li><i class="fa fa-wifi" aria-hidden="true"></i><?php echo $room['wifi'] ? 'WiFi' : ''; ?></li>
+                            <li><i class="fa fa-wifi" aria-hidden="true"></i>WiFi</li>
                         <?php } ?>
                         <?php if ($room['ac'] > 0 ) { ?>
-                            <li><?php echo $room['ac'] ? 'Air Conditioning' : ''; ?></li> 
+                            <li><i class="fa fa-snowflake" aria-hidden="true"></i> Air Conditioning</li> 
                         <?php } ?>
                     </ul>
                 </div>
                 <div class="reservation-form">
-                    <h2><strong>$ <?php echo htmlspecialchars($room['price']); ?></strong> night </p>
+                    <h2><strong>$ <?php echo htmlspecialchars($room['price']); ?></strong> night </h2>
                     <form id="reservationForm" action="../reservation/reserve_room.php" method="post">
                         <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
                         
-                        <label for="check_in_date">Check-In Date:</label>
+                        <label for="check_in_date">Check-In Date</label>
                         <input type="date" name="check_in_date" id="check_in_date" required><br><br>
                         
-                        <label for="check_out_date">Check-Out Date:</label>
+                        <label for="check_out_date">Check-Out Date</label>
                         <input type="date" name="check_out_date" id="check_out_date" required><br><br>
                         
                         <input type="submit" value="Reserve Room">
@@ -144,27 +144,76 @@ $conn->close();
 
             <div class="reviews-section">
                 <div class="average-rating">
-                    <p><strong>Average Rating </strong></p>
+                    <p>Average Rating </p>
                     <div class="stars">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
                             <span class="star <?php echo $i <= $room['average_rating'] ? 'selected' : ''; ?>">&#9733;</span>
+                            <input type="hidden" name="rating" value="<?php echo $i ?>">
                         <?php endfor; ?>
                     </div>
                 </div>
+                <?php if ($logged): ?>
+                    <div class="comment-form">
+                        <h3>Leave Us a comment</h3>
+                        <form id="commentForm" action="../review/insertReview.php" method="POST">
+                            <input type="hidden" name="room_id" value="<?php echo $room_id ?>">
+
+                            <label for="userName">User</label>
+                            <input type="text" id="userName" name="userName" value="<?php echo htmlspecialchars($userEmail); ?>" readonly>
+
+                            <label for="comment">Comment</label>
+                            <textarea id="comment" name="comment" rows="5" required></textarea>
+
+                            <label for="rating">Rate this house</label>
+                            <div class="stars">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <span class="star" data-value="<?php echo $i; ?>">&#9733;</span>
+                                <?php endfor; ?>
+                            </div>
+                            <input type="hidden" name="rating" id="ratingInput">
+
+                            <button type="submit">Submit Comment</button>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <p>You must be logged in to leave a comment.</p>
+                <?php endif; ?>
                 <div class="comments">
-                    <?php foreach ($comments as $comment) : ?>
-                        <div class="comment">
+                    <?php
+                    $maxVisibleComments = 4;
+                    foreach ($comments as $index => $comment) :
+                        $isHidden = $index >= $maxVisibleComments ? 'hidden' : '';
+                    ?>
+                        <div class="comment <?php echo $isHidden; ?>">
                             <div class="profile">
                                 <div class="profile-icon"><?php echo strtoupper(substr($comment['userName'], 0, 1)); ?></div>
                                 <strong><?php echo htmlspecialchars($comment['userName']); ?></strong>
                             </div>
                             <div class="comment-details">
                                 <p class="comment-date">on <?php echo date('F j, Y', strtotime($comment['created_at'])); ?></p>
-                                <p class="comment-text"><?php echo htmlspecialchars($comment['comment']); ?></p>
+                                <p class="comment-text" data-truncated="false">
+                                    <?php 
+                                    $truncatedComment = htmlspecialchars($comment['comment']);
+                                    if (strlen($truncatedComment) > 200) {
+                                        $truncatedComment = substr($truncatedComment, 0, 200);
+                                        $truncated = true;
+                                    } else {
+                                        $truncated = false;
+                                    }
+                                    echo $truncatedComment;
+                                    ?>
+                                </p>
+                                <?php if ($truncated): ?>
+                                    <span class="see-more" onclick="toggleComment(this)">See more</span>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <?php if (count($comments) > $maxVisibleComments): ?>
+                    <button id="showMoreComments" onclick="showMoreComments()">Show more</button>
+                <?php endif; ?>
+
             </div>
         </div>
 
@@ -223,27 +272,17 @@ $conn->close();
         document.querySelectorAll('.star').forEach(function(star) {
             star.addEventListener('click', function() {
                 var rating = this.getAttribute('data-value');
+                document.getElementById('ratingInput').value = rating;
                 <?php if ($logged): ?>
-                    var room_id = <?php echo $room_id; ?>;
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "rate_room.php", true);
-                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            // Handle response
-                            document.querySelectorAll('.star').forEach(function(star) {
-                                star.classList.remove('selected');
-                            });
-                            for (var i = 1; i <= rating; i++) {
-                                document.querySelector('.star[data-value="' + i + '"]').classList.add('selected');
-                            }
-                            alert('Rating submitted successfully');
-                        }
-                    };
-                    xhr.send("room_id=" + room_id + "&rating=" + rating);
+                    document.querySelectorAll('.stars .star').forEach(function(star) {
+                        star.classList.remove('selected');
+                    });
+                    for (var i = 1; i <= rating; i++) {
+                        document.querySelector('.stars .star[data-value="' + i + '"]').classList.add('selected');
+                    }
                 <?php else: ?>
                     alert('You must be logged in to rate a room.');
-                    window.location.href = 'signup.php';
+                    // window.location.href = 'signup.php';
                 <?php endif; ?>
             });
         });
@@ -258,8 +297,8 @@ $conn->close();
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var response = JSON.parse(xhr.responseText);
                         if (response.success) {
-                            var favoriteButton = document.getElementsByClassName("fa-bookmark-o");
-                            favoriteButton.style.color = response.isFavorite ? 'red' : 'white';
+                            var favoriteButton = document.querySelector("#favoriteButton");
+                            favoriteButton.style.color = response.isFavorite ? 'red' : 'gray';
                         } else {
                             alert('An error occurred. Please try again.');
                         }
@@ -271,6 +310,22 @@ $conn->close();
                 window.location.href = '<?php echo $base_url ?>/user/signup.html';
             <?php endif; ?>
         });
+
+        // Toggle comment visibility
+        function toggleComment(button) {
+            var comment = button.previousElementSibling;
+            comment.classList.toggle('expanded');
+            button.textContent = comment.classList.contains('expanded') ? 'See less' : 'See more';
+        }
+
+        // Show more comments
+        function showMoreComments() {
+            var hiddenComments = document.querySelectorAll('.comment.hidden');
+            hiddenComments.forEach(function(comment) {
+                comment.classList.remove('hidden');
+            });
+            document.getElementById('showMoreComments').style.display = 'none';
+        }
     </script>
 
     <?php else: ?>

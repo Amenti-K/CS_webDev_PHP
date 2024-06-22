@@ -222,13 +222,13 @@ $base_url = "http://" . $_SERVER['HTTP_HOST'] . '/GHM mine/admin';
           <i class="fa fa-user user"></i>
           <ul class="userOptions">
             <li><?php echo $admin; ?></li>
-            <li><a href="">Reserved Rooms</a></li>
-            <li><a href="<?php echo $base_url ?>/">Logout</a></li>
+            <li><a href="<?php echo $base_url ?>/admins/signupAdmin.html" class="signUp">Sign Up</a></li>
+            <li><a href="<?php echo $base_url ?>/rooms/navBar/logout.php">Logout</a></li>
           </ul>
         </div>
       <?php } else { ?>
         <div class="sign">
-          <a href="<?php echo $base_url ?>/admins/signupAdmin.html" class="signUp">Sign Up</a>
+          <a href="<?php echo $base_url ?>/admins/index.html" class="signUp">Sign Up</a>
         </div>
       <?php } ?>
       <div class="nav_toggle" id="nav_toggle">

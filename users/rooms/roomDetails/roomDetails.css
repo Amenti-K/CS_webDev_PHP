@@ -4,12 +4,13 @@
   --font-family: "Montserrat", sans-serif;
   --border-color: #ccc;
   --background-color: #fff;
-  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0px 8px 36px rgba(0, 0, 0, 0.1);
   --hover-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   --star-color: #ddd;
   --selected-star-color: #f5b301;
   --modal-background: rgba(0, 0, 0, 0.4);
   --modal-content-bg: #fefefe;
+  --primaryColor: rgb(22, 120, 186); /* Lighter shade for button hover */
 }
 
 body {
@@ -36,24 +37,6 @@ body {
 
 .room-header h1 {
   margin: 0;
-}
-
-.favorite-button {
-  padding: 10px 20px;
-  cursor: pointer;
-  background: none;
-  border: 1px solid black;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.favorite-button .bookmark-icon {
-  font-size: 20px;
-  color: black;
 }
 
 .room-images {
@@ -86,6 +69,7 @@ body {
 
 .room-description {
   margin-top: 20px;
+  margin-right: 10%;
 }
 
 .room-description .name_rating {
@@ -99,20 +83,13 @@ body {
 }
 
 .room-description p {
-  margin: 8px 0;
-}
-
-.room-description ul {
-  top: 0;
-  margin-top: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
+  font-family: var(--font-family);
+  font-size: larger;
+  margin: 4px 0 8px;
 }
 
 .room-amenities {
   display: flex;
-  justify-content: flex-end;
   margin-top: 20px;
   gap: 40px;
 }
@@ -122,54 +99,84 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  & p {
+    font-size: 2rem;
+  }
+}
+
+.other-amenities ul {
+  list-style: none;
+  font-size: 1.25rem;
+}
+.other-amenities ul li i {
+  color: var(--primaryColor);
+  margin-right: 20px;
+  font-size: 1.5rem;
 }
 
 .reservation-form {
   box-sizing: border-box;
   margin-right: 60px;
   flex: 0.7;
-  padding: 20px 40px;
+  padding: 10px 40px 20px;
   box-shadow: var(--box-shadow);
   width: min-content;
   justify-content: center;
   height: 400px;
+  border-radius: 15px;
+}
+.reservation-form h2 {
+  color: var(--primaryColor);
+  top: 0;
+  margin-bottom: 50px;
+  font-size: 1.8rem;
 }
 
+.reservation-form form input {
+  background-color: #f0f0f0;
+  border: none;
+  margin-top: 5px;
+  padding: 10px 15px;
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+}
 .reservation-form form input[type="submit"] {
   width: 100%;
   height: 50px;
   border-radius: 15px;
   border: none;
-  font-size: medium;
+  font-size: large;
   letter-spacing: 0.25rem;
   cursor: pointer;
-}
-
-.other-amenities ul {
-  list-style: none;
-  line-height: 2rem;
+  background-color: var(--primaryColor);
+  color: white;
 }
 
 .reviews-section {
-  margin-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 0;
 }
 
 .reviews-section .average-rating {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
-}
-
-.reviews-section .average-rating p {
-  margin-right: 20px;
+  font-family: var(--font-family);
+  font-size: 2rem;
+  & p {
+    margin-right: 20px;
+  }
 }
 
 .stars {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .star {
-  font-size: 24px;
+  font-size: 2rem;
   color: var(--star-color);
   cursor: pointer;
   margin-right: 3px;
@@ -228,6 +235,7 @@ body {
 
 .comment-text {
   margin-top: 5px;
+  margin-bottom: 5px;
   line-height: 1.5;
 }
 
@@ -254,6 +262,19 @@ body {
   max-width: 500px;
 }
 
+.modal-content button {
+  width: 80%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  background-color: var(--primaryColor);
+  color: white;
+}
+
 .close {
   color: #aaa;
   float: right;
@@ -277,9 +298,8 @@ body {
 
   .room-images > img,
   .side-by-side-images img {
-    background-color: #f5b301;
     width: 100%;
-    height: 150px;
+    height: 350px;
   }
   .side-by-side-images img {
     width: calc(100vw - 40%);
@@ -307,4 +327,104 @@ body {
     width: calc(100vw - 40%);
     margin: 0;
   }
+}
+
+/* all about the comments and favorite */
+
+.comment-form {
+  position: relative;
+  max-width: 500px;
+  top: -40px;
+  margin: auto 60px;
+  padding: 20px;
+  border-radius: 5px;
+}
+.comment-form h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+.comment-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.comment-form button {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  background-color: var(--primaryColor);
+  color: white;
+}
+.comment-form button:hover {
+  background-color: var(--primaryColor);
+}
+.comment {
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgb(139, 124, 124);
+}
+.comment .profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.comment .profile-icon {
+  background-color: var(--primaryColor);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+.comment .comment-text {
+  max-height: 7.6em; /* approximately 3 lines */
+  overflow: hidden;
+  position: relative;
+}
+.comment .comment-details {
+  margin-left: 15px;
+}
+
+.comment button .showMoreComments {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  background-color: var(--primaryColor);
+  color: white;
+}
+.comment.expanded .comment-text {
+  max-height: none;
+}
+.comment.expanded .see-more {
+  display: inline;
+}
+.comment-text[data-truncated="true"]::after {
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: white;
+}
+.comment.hidden {
+  display: none;
 }

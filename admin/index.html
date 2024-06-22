@@ -1,25 +1,48 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Login</title>
+    <link rel="stylesheet" href="./admins/styleSign.css" />
   </head>
   <body>
-    <h2>Login</h2>
-    <form action="./admins/login_admin.php" method="post">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required /><br /><br />
-
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-      /><br /><br />
-
-      <button type="submit">Login</button>
-    </form>
+    <div class="container">
+      <div class="form-container log-in">
+        <h2>Login</h2>
+        <form action="./admins/login_admin.php" method="post">
+          <table>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  class="input"
+                  placeholder="Email"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  class="input"
+                  placeholder="password"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: center">
+                <input type="submit" value="Enter" class="button" />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

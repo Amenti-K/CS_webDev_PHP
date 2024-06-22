@@ -11,6 +11,7 @@ else $user = '';
   <head>
     <meta charset="UTF-8" />
     <title>Available Rooms</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="stylesRoomAdmin.css">
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -71,7 +72,15 @@ else $user = '';
   </head>
   <body>
     <?php include './navBar/navbar.php'; ?>
-    <a href="add_rooms/addRooms.html"><button type="button">ADD rooms</button></a>
+    <div id="search-container">
+      <form id="search-form">
+        <input type="text" id="location" name="location" placeholder="Location">
+        <input type="date" id="check-in-date" name="check_in_date" placeholder="check in">
+        <input type="date" id="check-out-date" name="check_out_date" placeholder="check out">
+        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
+      <a href="add_rooms/addRooms.html"><button type="button">Add Rooms</button></a>
+    </div>
     <div id="rooms-container"></div>
   </body>
 </html>

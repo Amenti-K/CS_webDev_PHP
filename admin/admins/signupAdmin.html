@@ -3,41 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <title>Signup</title>
+    <link rel="stylesheet" href="styleSign.css" />
   </head>
   <body>
-    <h2>Signup</h2>
-    <form action="register_admin.php" method="post">
-      <label for="first_name">First Name:</label>
-      <input
-        type="text"
-        id="first_name"
-        name="first_name"
-        required
-      /><br /><br />
-
-      <label for="last_name">Last Name:</label>
-      <input type="text" id="last_name" name="last_name" required /><br /><br />
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required /><br /><br />
-
-      <label for="phonenumber">Phone Number:</label>
-      <input
-        type="text"
-        id="phonenumber"
-        name="phonenumber"
-        required
-      /><br /><br />
-
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-      /><br /><br />
-
-      <button type="submit">Register</button>
-    </form>
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <h2>Sign-up</h2>
+        <form action="register_admin.php" method="post">
+          <table>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  placeholder="First Name"
+                  required
+                  class="input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  placeholder="Last Name"
+                  required
+                  class="input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  class="input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="phonenumber"
+                  name="phonenumber"
+                  placeholder="Phone Number"
+                  required
+                  class="input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  class="input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">
+                <input type="submit" value="register" class="button" />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
